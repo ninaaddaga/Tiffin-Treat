@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiffin Treats | Order Food</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        :root { --primary: #ff4500; --dark: #2d2d2d; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f4f4f4; }
+        header { background: white; padding: 15px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .container { max-width: 600px; margin: 20px auto; padding: 20px; background: white; border-radius: 10px; }
+        .food-item { display: flex; justify-content: space-between; padding: 15px; border-bottom: 1px solid #eee; }
+        .btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+        .hidden { display: none; }
+        input { width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; }
+        .cart-badge { background: red; color: white; padding: 2px 8px; border-radius: 50%; font-size: 12px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 style="color: var(--primary);">Tiffin Treats</h1>
+    <button class="btn" onclick="showPage('cart-page')">🛒 Cart <span id="cart-count" class="cart-badge">0</span></button>
+</header>
+
+<div id="menu-page" class="container">
+    <h2>Fresh Tiffins</h2>
+    <div class="food-item">
+        <span>Standard Veg Thali - ₹120</span>
+        <button class="btn" onclick="addToCart('Veg Thali', 120)">Add</button>
+    </div>
+    <div class="food-item">
+        <span>Special Chicken Thali - ₹180</span>
+        <button class="btn" onclick="addToCart('Chicken Thali', 180)">Add</button>
+    </div>
+</div>
+
+<div id="cart-page" class="container hidden">
+    <h2>Your Cart</h2>
+    <div id="cart-items"></div>
+    <h3>Total: ₹<span id="total-price">0</span></h3>
+    <button class="btn" onclick="showPage('checkout-page')">Buy Now</button>
+    <button onclick="showPage('menu-page')">Back to Menu</button>
+</div>
+
+<div id="checkout-page" class="container hidden">
+    <h2>Delivery Details</h2>
+    <input type="text" id="userName" placeholder="Full Name">
+    <input type="text" id="userAddress" placeholder="Full Delivery Address">
+    <button class="btn" onclick="processPayment()">Proceed to Payment</button>
+</div>
+
+<div id="payment-page" class="container hidden" style="text-align: center;">
+    <h2>Payment for Tiffin Treats</h2>
+    <p>Scan to Pay or use Razorpay</p>
+    <img id="qr-code" src="" alt="Payment QR">
+    <br><br>
+    <button class="btn" id="razorpay-button">Pay with Razorpay</button>
+</div>
+
+<script>
+    let cart = [];
+    let total = 0;
+
+    function showPage(pageId) {
+        document.querySelectorAll('.container').forEach(p => p.classList.add('hidden'));
+        document.getElementById(pageId).classList.remove('hidden');
+        if(pageId === 'cart-page') updateCartUI();
+    }
+
+    function addToCart(name, price) {
+        cart.push({name, price});
+        total += price;
+        document.getElementById('cart-count').innerText = cart.length;
+        alert(name + " added!");
+    }
+
+    function updateCartUI() {
+        const list = document.getElementById('cart-items');
+        list.innerHTML = cart.map(item => `<p>${item.name} - ₹${item.price}</p>`).join('');
+        document.getElementById('total-price').innerText = total;
+    }
+
+    function processPayment() {
+        const name = document.getElementById('userName').value;
+        if(!name) return alert("Please enter details");
+        
+        // Generate Example QR (UPI Style)
+        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=store@upi&pn=TiffinTreats&am=${total}`;
+        document.getElementById('qr-code').src = qrUrl;
+        
+        showPage('payment-page');
+    }
+
+    document.getElementById('razorpay-button').onclick = function() {
+        var options = {
+            "key": "rzp_test_YOURID", // Replace with your actual Test ID
+            "amount": total * 100,
+            "currency": "INR",
+            "name": "Tiffin Treats",
+            "description": "Food Order",
+            "handler": function (response){
+                alert("Order Placed Successfully! ID: " + response.razorpay_payment_id);
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+    };
+</script>
+</body>
+</html>
