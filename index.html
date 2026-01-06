@@ -24,16 +24,14 @@ body{
     background-attachment:fixed;
 }
 
+/* HEADER */
 header{
     background:var(--glass);
     backdrop-filter:blur(10px);
-    padding:15px 25px;
+    padding:20px;
+    text-align:center;
     position:sticky;
     top:0;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    z-index:10;
 }
 
 h1{
@@ -42,84 +40,69 @@ h1{
     color:var(--dark);
 }
 
-.container{
-    max-width:500px;
-    margin:40px auto;
+/* MENU SECTION */
+.section{
+    max-width:600px;
+    margin:60px auto;
     background:var(--glass);
-    padding:25px;
-    border-radius:20px;
+    padding:30px;
+    border-radius:25px;
 }
 
 h2{
-    color:var(--dark);
     border-bottom:2px solid var(--accent);
-    padding-bottom:8px;
+    padding-bottom:10px;
+    color:var(--dark);
 }
 
-.food-item{
+.food{
     display:flex;
     justify-content:space-between;
     padding:15px 0;
     border-bottom:1px solid #ddd;
 }
 
-.food-item span{
+.food span{
     color:var(--accent);
     font-weight:600;
 }
 
-.qty{
-    display:flex;
-    gap:10px;
-    align-items:center;
+/* SPACER — forces scroll */
+.spacer{
+    height:300px;
 }
 
-button{
-    border:none;
-    background:var(--dark);
-    color:#fff;
-    padding:8px 14px;
-    border-radius:20px;
-    cursor:pointer;
-    font-weight:600;
-}
-
-button:hover{
-    background:var(--accent);
-}
-
-/* ===== ABOUT SECTION ===== */
+/* ABOUT SECTION */
 .about{
-    max-width:900px;
+    max-width:1000px;
     margin:100px auto;
     background:var(--glass);
-    border-radius:30px;
     padding:50px;
+    border-radius:35px;
     display:flex;
     gap:40px;
     align-items:center;
 }
 
 .about img{
-    width:320px;
-    height:320px;
+    width:350px;
+    height:350px;
     object-fit:cover;
-    border-radius:25px;
-    box-shadow:0 15px 30px rgba(0,0,0,.35);
+    border-radius:30px;
+    box-shadow:0 20px 40px rgba(0,0,0,.35);
 }
 
 .about-text h2{
     border:none;
-    margin-top:0;
 }
 
 .about-text p{
-    font-size:1.05em;
-    line-height:1.7;
+    font-size:1.1em;
+    line-height:1.8;
 }
 
-/* Mobile */
-@media(max-width:800px){
+/* MOBILE */
+@media(max-width:900px){
     .about{
         flex-direction:column;
         text-align:center;
@@ -135,52 +118,47 @@ button:hover{
 </header>
 
 <!-- MENU -->
-<div class="container">
+<section class="section">
     <h2>Our Kitchen</h2>
 
-    <div class="food-item">
+    <div class="food">
         <div>
             <strong>Veg Thali</strong><br>
             <span>₹120</span>
         </div>
-        <div class="qty">
-            <button>-</button>
-            0
-            <button>+</button>
-        </div>
     </div>
 
-    <div class="food-item">
+    <div class="food">
         <div>
             <strong>Chicken Thali</strong><br>
             <span>₹180</span>
         </div>
-        <div class="qty">
-            <button>-</button>
-            0
-            <button>+</button>
-        </div>
     </div>
-</div>
+</section>
 
-<!-- SCROLL DOWN ABOUT ME -->
-<div class="about">
-    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQ...FBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQU" alt="Founder">
+<!-- EXTRA SPACE SO YOU SCROLL -->
+<div class="spacer"></div>
+
+<!-- ABOUT (SCROLL DOWN HERE) -->
+<section class="about">
+    <img src="founder.jpg" alt="Founder">
 
     <div class="about-text">
         <h2>About Me</h2>
         <p>
             Hi, I’m the founder of <b>Tiffin Treats</b>.
-            I started this kitchen with one simple idea —
-            to provide fresh, hygienic, home-style meals
-            for people who miss homemade food.
+            I started this kitchen to bring fresh,
+            hygienic, home-style meals to people who
+            miss the comfort of homemade food.
         </p>
+
         <p>
-            Every tiffin is prepared with care, quality ingredients,
-            and the warmth of real home cooking.
+            Every tiffin is cooked with care,
+            quality ingredients, and love —
+            just like food made at home.
         </p>
     </div>
-</div>
+</section>
 
 </body>
 </html>
