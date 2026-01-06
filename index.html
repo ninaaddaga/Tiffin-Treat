@@ -6,143 +6,123 @@
 <title>Tiffin Treats</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <style>
-:root {
-    --accent-green: #2ecc71;
-    --dark-green: #1b4d3e;
-    --glass: rgba(255,255,255,0.9);
+:root{
+    --accent:#2ecc71;
+    --dark:#1b4d3e;
+    --glass:rgba(255,255,255,0.9);
 }
 
-body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-    url('https://images.unsplash.com/photo-1543353071-873f17a7a088');
-    background-size: cover;
-    background-attachment: fixed;
+body{
+    margin:0;
+    font-family:Poppins,sans-serif;
+    background:
+      linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),
+      url("https://images.unsplash.com/photo-1543353071-873f17a7a088");
+    background-size:cover;
+    background-attachment:fixed;
 }
 
-/* ---------- HEADER ---------- */
-header {
-    background: var(--glass);
-    backdrop-filter: blur(10px);
-    padding: 15px 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+header{
+    background:var(--glass);
+    backdrop-filter:blur(10px);
+    padding:15px 25px;
+    position:sticky;
+    top:0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    z-index:10;
 }
 
-h1 {
-    margin: 0;
-    color: var(--dark-green);
-    font-weight: 800;
+h1{
+    margin:0;
+    font-weight:800;
+    color:var(--dark);
 }
 
-.btn {
-    background: var(--dark-green);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 30px;
-    cursor: pointer;
-    font-weight: 600;
+.container{
+    max-width:500px;
+    margin:40px auto;
+    background:var(--glass);
+    padding:25px;
+    border-radius:20px;
 }
 
-.btn:hover {
-    background: var(--accent-green);
+h2{
+    color:var(--dark);
+    border-bottom:2px solid var(--accent);
+    padding-bottom:8px;
 }
 
-.cart-badge {
-    background: var(--accent-green);
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-size: 0.8em;
+.food-item{
+    display:flex;
+    justify-content:space-between;
+    padding:15px 0;
+    border-bottom:1px solid #ddd;
 }
 
-/* ---------- CONTAINERS ---------- */
-.container {
-    max-width: 500px;
-    margin: 30px auto;
-    padding: 25px;
-    background: var(--glass);
-    border-radius: 20px;
+.food-item span{
+    color:var(--accent);
+    font-weight:600;
 }
 
-.hidden { display: none; }
-
-h2 {
-    border-bottom: 2px solid var(--accent-green);
-    padding-bottom: 8px;
-    color: var(--dark-green);
+.qty{
+    display:flex;
+    gap:10px;
+    align-items:center;
 }
 
-/* ---------- MENU ---------- */
-.food-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px 0;
-    border-bottom: 1px solid #ddd;
+button{
+    border:none;
+    background:var(--dark);
+    color:#fff;
+    padding:8px 14px;
+    border-radius:20px;
+    cursor:pointer;
+    font-weight:600;
 }
 
-.food-info span {
-    color: var(--accent-green);
-    font-weight: bold;
+button:hover{
+    background:var(--accent);
 }
 
-.qty-controls {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+/* ===== ABOUT SECTION ===== */
+.about{
+    max-width:900px;
+    margin:100px auto;
+    background:var(--glass);
+    border-radius:30px;
+    padding:50px;
+    display:flex;
+    gap:40px;
+    align-items:center;
 }
 
-.qty-btn {
-    font-size: 1.5em;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--accent-green);
+.about img{
+    width:320px;
+    height:320px;
+    object-fit:cover;
+    border-radius:25px;
+    box-shadow:0 15px 30px rgba(0,0,0,.35);
 }
 
-/* ---------- ABOUT SECTION ---------- */
-.about-section {
-    max-width: 900px;
-    margin: 60px auto;
-    background: var(--glass);
-    border-radius: 25px;
-    padding: 40px;
-    display: flex;
-    gap: 40px;
-    align-items: center;
+.about-text h2{
+    border:none;
+    margin-top:0;
 }
 
-.about-section img {
-    width: 280px;
-    height: 280px;
-    border-radius: 25px;
-    object-fit: cover;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+.about-text p{
+    font-size:1.05em;
+    line-height:1.7;
 }
 
-.about-text h2 {
-    border: none;
-    margin-top: 0;
-}
-
-.about-text p {
-    line-height: 1.6;
-    font-size: 1.05em;
-}
-
-/* ---------- RESPONSIVE ---------- */
-@media (max-width: 768px) {
-    .about-section {
-        flex-direction: column;
-        text-align: center;
+/* Mobile */
+@media(max-width:800px){
+    .about{
+        flex-direction:column;
+        text-align:center;
     }
 }
 </style>
@@ -152,105 +132,55 @@ h2 {
 
 <header>
     <h1>🌿 Tiffin Treats</h1>
-    <button class="btn" onclick="showPage('cart')">
-        Basket <span id="cart-count" class="cart-badge">0</span>
-    </button>
 </header>
 
 <!-- MENU -->
-<div id="menu" class="container">
+<div class="container">
     <h2>Our Kitchen</h2>
 
     <div class="food-item">
-        <div class="food-info">
-            <strong>Veg Thali</strong>
+        <div>
+            <strong>Veg Thali</strong><br>
             <span>₹120</span>
         </div>
-        <div class="qty-controls">
-            <button class="qty-btn" onclick="updateQty('veg',-1)">−</button>
-            <span id="qty-veg">0</span>
-            <button class="qty-btn" onclick="updateQty('veg',1)">+</button>
+        <div class="qty">
+            <button>-</button>
+            0
+            <button>+</button>
         </div>
     </div>
 
     <div class="food-item">
-        <div class="food-info">
-            <strong>Chicken Thali</strong>
+        <div>
+            <strong>Chicken Thali</strong><br>
             <span>₹180</span>
         </div>
-        <div class="qty-controls">
-            <button class="qty-btn" onclick="updateQty('chicken',-1)">−</button>
-            <span id="qty-chicken">0</span>
-            <button class="qty-btn" onclick="updateQty('chicken',1)">+</button>
+        <div class="qty">
+            <button>-</button>
+            0
+            <button>+</button>
         </div>
     </div>
 </div>
 
-<!-- CART -->
-<div id="cart" class="container hidden">
-    <h2>Your Basket</h2>
-    <div id="cart-items"></div>
-    <strong>Total: ₹<span id="total">0</span></strong>
-    <button class="btn" onclick="showPage('menu')">Back to Menu</button>
-</div>
-
-<!-- ABOUT US (SCROLL DOWN) -->
-<div class="about-section">
-    <img src="c6a270fa-f7f3-43c2-8ca0-fb075a5d7e31.jpeg" alt="Founder">
+<!-- SCROLL DOWN ABOUT ME -->
+<div class="about">
+    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQ...FBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQU" alt="Founder">
 
     <div class="about-text">
-        <h2>About Us</h2>
+        <h2>About Me</h2>
         <p>
-            Hi! I’m the founder of <b>Tiffin Treats</b>.  
-            This kitchen was started with one simple goal —
-            to provide fresh, hygienic, and comforting home-style meals.
+            Hi, I’m the founder of <b>Tiffin Treats</b>.
+            I started this kitchen with one simple idea —
+            to provide fresh, hygienic, home-style meals
+            for people who miss homemade food.
         </p>
         <p>
             Every tiffin is prepared with care, quality ingredients,
-            and the warmth of home cooking, so you never miss
-            homemade food even on busy days.
+            and the warmth of real home cooking.
         </p>
     </div>
 </div>
-
-<script>
-let cart = {
-    veg: { price: 120, qty: 0, name: "Veg Thali" },
-    chicken: { price: 180, qty: 0, name: "Chicken Thali" }
-};
-
-function showPage(id) {
-    document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
-    document.getElementById(id).classList.remove('hidden');
-    updateCart();
-}
-
-function updateQty(key, change) {
-    cart[key].qty = Math.max(0, cart[key].qty + change);
-    document.getElementById(`qty-${key}`).innerText = cart[key].qty;
-    updateBadge();
-}
-
-function updateBadge() {
-    let total = Object.values(cart).reduce((s,i)=>s+i.qty,0);
-    document.getElementById('cart-count').innerText = total;
-}
-
-function updateCart() {
-    let list = document.getElementById('cart-items');
-    let total = 0;
-    list.innerHTML = "";
-
-    for (let item of Object.values(cart)) {
-        if (item.qty > 0) {
-            let sub = item.qty * item.price;
-            total += sub;
-            list.innerHTML += `<p>${item.name} × ${item.qty} — ₹${sub}</p>`;
-        }
-    }
-    document.getElementById('total').innerText = total;
-}
-</script>
 
 </body>
 </html>
