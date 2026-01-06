@@ -1,256 +1,288 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiffin Treats | Aesthetic Food Delivery</title>
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    <style>
-        :root {
-            --accent-green: #2ecc71;
-            --dark-green: #1b4d3e;
-            --glass: rgba(255, 255, 255, 0.9);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiffin Treats</title>
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            /* Aesthetic food background */
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
-                        url('https://images.unsplash.com/photo-1543353071-873f17a7a088?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-attachment: fixed;
-            color: var(--dark-green);
-            min-height: 100vh;
-        }
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
-        header {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 
-        h1 { color: var(--dark-green); margin: 0; letter-spacing: 1px; font-weight: 800; }
+<style>
+:root {
+    --accent-green: #2ecc71;
+    --dark-green: #1b4d3e;
+    --glass: rgba(255, 255, 255, 0.9);
+}
 
-        .container {
-            max-width: 500px;
-            margin: 30px auto;
-            padding: 25px;
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-        }
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+    url('https://images.unsplash.com/photo-1543353071-873f17a7a088');
+    background-size: cover;
+    background-attachment: fixed;
+}
 
-        h2 { border-bottom: 2px solid var(--accent-green); padding-bottom: 10px; color: var(--dark-green); }
+header {
+    background: var(--glass);
+    backdrop-filter: blur(10px);
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
 
-        .food-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-        }
+h1 {
+    margin: 0;
+    color: var(--dark-green);
+    font-weight: 800;
+}
 
-        .food-info strong { font-size: 1.1em; display: block; }
-        .food-info span { color: var(--accent-green); font-weight: bold; }
+/* ---------- ABOUT DROPDOWN ---------- */
 
-        .qty-controls {
-            display: flex;
-            align-items: center;
-            background: #fff;
-            border-radius: 50px;
-            padding: 5px 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+.about-dropdown {
+    position: relative;
+}
 
-        .qty-btn {
-            background: none;
-            border: none;
-            color: var(--accent-green);
-            font-size: 1.5em;
-            cursor: pointer;
-            padding: 0 10px;
-            transition: 0.3s;
-        }
+.about-btn {
+    background: var(--dark-green);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+}
 
-        .qty-btn:hover { transform: scale(1.2); }
+.about-content {
+    position: absolute;
+    right: 0;
+    top: 55px;
+    width: 320px;
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    display: none;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
 
-        .btn {
-            background: var(--dark-green);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.3s;
-            width: 100%;
-            margin-top: 15px;
-        }
+.about-dropdown:hover .about-content {
+    display: flex;
+    gap: 15px;
+}
 
-        .btn:hover { background: var(--accent-green); box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4); }
+.about-content img {
+    width: 90px;
+    height: 90px;
+    border-radius: 12px;
+    object-fit: cover;
+}
 
-        .cart-badge {
-            background: var(--accent-green);
-            color: white;
-            padding: 3px 10px;
-            border-radius: 50px;
-            font-size: 0.8em;
-            margin-left: 8px;
-        }
+.about-text strong {
+    color: var(--dark-green);
+}
 
-        .hidden { display: none; }
+.about-text p {
+    font-size: 0.9em;
+    margin-top: 5px;
+}
 
-        input, textarea {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            box-sizing: border-box;
-        }
+/* ---------- CONTAINER ---------- */
 
-        #qr-code {
-            border-radius: 15px;
-            margin: 20px 0;
-            background: white;
-            padding: 10px;
-        }
+.container {
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 25px;
+    background: var(--glass);
+    border-radius: 20px;
+}
 
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+h2 {
+    border-bottom: 2px solid var(--accent-green);
+    padding-bottom: 8px;
+    color: var(--dark-green);
+}
+
+.food-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.food-info span {
+    color: var(--accent-green);
+    font-weight: bold;
+}
+
+.qty-controls {
+    display: flex;
+    align-items: center;
+}
+
+.qty-btn {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: var(--accent-green);
+}
+
+.btn {
+    background: var(--dark-green);
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 12px;
+    border-radius: 30px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: var(--accent-green);
+}
+
+.cart-badge {
+    background: var(--accent-green);
+    color: white;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.8em;
+}
+
+.hidden {
+    display: none;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+</style>
 </head>
+
 <body>
 
 <header>
     <h1>🌿 Tiffin Treats</h1>
-    <button class="btn" style="width: auto;" onclick="showPage('cart-page')">
-        My Basket <span id="cart-count" class="cart-badge">0</span>
-    </button>
+
+    <div style="display:flex; gap:10px;">
+        <button class="btn" style="width:auto;" onclick="showPage('cart')">
+            Basket <span id="cart-count" class="cart-badge">0</span>
+        </button>
+
+        <div class="about-dropdown">
+            <button class="about-btn">About Us ▾</button>
+
+            <div class="about-content">
+                <img src="c6a270fa-f7f3-43c2-8ca0-fb075a5d7e31.jpeg" alt="About">
+                <div class="about-text">
+                    <strong>Founder</strong>
+                    <p>
+                        Tiffin Treats delivers fresh, hygienic,
+                        home-style meals cooked with love—perfect
+                        for daily comfort food.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 </header>
 
-<div id="menu-page" class="container">
+<!-- MENU -->
+<div id="menu" class="container">
     <h2>Our Kitchen</h2>
-    
+
     <div class="food-item">
         <div class="food-info">
-            <strong>Standard Veg Thali</strong>
+            <strong>Veg Thali</strong>
             <span>₹120</span>
         </div>
         <div class="qty-controls">
-            <button class="qty-btn" onclick="updateQty('Veg Thali', 120, -1)">-</button>
-            <span id="qty-Veg Thali" style="font-weight: bold; min-width: 20px; text-align: center;">0</span>
-            <button class="qty-btn" onclick="updateQty('Veg Thali', 120, 1)">+</button>
+            <button class="qty-btn" onclick="updateQty('veg',120,-1)">−</button>
+            <span id="qty-veg">0</span>
+            <button class="qty-btn" onclick="updateQty('veg',120,1)">+</button>
         </div>
     </div>
 
     <div class="food-item">
         <div class="food-info">
-            <strong>Special Chicken Thali</strong>
+            <strong>Chicken Thali</strong>
             <span>₹180</span>
         </div>
         <div class="qty-controls">
-            <button class="qty-btn" onclick="updateQty('Chicken Thali', 180, -1)">-</button>
-            <span id="qty-Chicken Thali" style="font-weight: bold; min-width: 20px; text-align: center;">0</span>
-            <button class="qty-btn" onclick="updateQty('Chicken Thali', 180, 1)">+</button>
+            <button class="qty-btn" onclick="updateQty('chicken',180,-1)">−</button>
+            <span id="qty-chicken">0</span>
+            <button class="qty-btn" onclick="updateQty('chicken',180,1)">+</button>
         </div>
     </div>
 </div>
 
-<div id="cart-page" class="container hidden">
+<!-- CART -->
+<div id="cart" class="container hidden">
     <h2>Your Basket</h2>
     <div id="cart-items"></div>
-    <div style="display: flex; justify-content: space-between; margin-top: 20px; font-weight: 800; font-size: 1.2em;">
-        <span>Total</span>
-        <span>₹<span id="total-price">0</span></span>
-    </div>
-    <button class="btn" onclick="showPage('checkout-page')">Proceed to Checkout</button>
-    <p onclick="showPage('menu-page')" style="text-align: center; cursor: pointer; color: var(--accent-green); margin-top: 15px;">+ Add more food</p>
+    <strong>Total: ₹<span id="total">0</span></strong>
+    <button class="btn" onclick="showPage('checkout')">Checkout</button>
 </div>
 
-<div id="checkout-page" class="container hidden">
+<!-- CHECKOUT -->
+<div id="checkout" class="container hidden">
     <h2>Delivery Info</h2>
-    <input type="text" id="userName" placeholder="Your Name">
-    <textarea id="userAddress" placeholder="Street Address, City, Pincode"></textarea>
-    <button class="btn" onclick="processPayment()">Confirm Order</button>
-</div>
-
-<div id="payment-page" class="container hidden" style="text-align: center;">
-    <h2>Payment</h2>
-    <p>Scan the QR to pay <strong>₹<span id="pay-amount">0</span></strong></p>
-    <img id="qr-code" src="" alt="Payment QR">
-    <button class="btn" id="razorpay-button">Pay Online with Razorpay</button>
+    <input placeholder="Name">
+    <textarea placeholder="Address"></textarea>
+    <button class="btn">Place Order</button>
 </div>
 
 <script>
-    let cart = {};
+let cart = {
+    veg: { price: 120, qty: 0, name: "Veg Thali" },
+    chicken: { price: 180, qty: 0, name: "Chicken Thali" }
+};
 
-    function showPage(pageId) {
-        document.querySelectorAll('.container').forEach(p => p.classList.add('hidden'));
-        document.getElementById(pageId).classList.remove('hidden');
-        if(pageId === 'cart-page') updateCartUI();
-        window.scrollTo(0,0);
-    }
+function showPage(id) {
+    document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
+    document.getElementById(id).classList.remove('hidden');
+    updateCart();
+}
 
-    function updateQty(name, price, change) {
-        if (!cart[name]) cart[name] = { price: price, qty: 0 };
-        let newQty = cart[name].qty + change;
-        if (newQty >= 0 && newQty <= 9) {
-            cart[name].qty = newQty;
-            document.getElementById(`qty-${name}`).innerText = newQty;
-            updateBadge();
+function updateQty(key, price, change) {
+    let item = cart[key];
+    item.qty = Math.max(0, item.qty + change);
+    document.getElementById(`qty-${key}`).innerText = item.qty;
+    updateBadge();
+}
+
+function updateBadge() {
+    let total = Object.values(cart).reduce((s,i)=>s+i.qty,0);
+    document.getElementById('cart-count').innerText = total;
+}
+
+function updateCart() {
+    let list = document.getElementById('cart-items');
+    let total = 0;
+    list.innerHTML = "";
+
+    for (let item of Object.values(cart)) {
+        if (item.qty > 0) {
+            let sub = item.qty * item.price;
+            total += sub;
+            list.innerHTML += `<p>${item.name} × ${item.qty} — ₹${sub}</p>`;
         }
     }
 
-    function updateBadge() {
-        let totalQty = Object.values(cart).reduce((sum, item) => sum + item.qty, 0);
-        document.getElementById('cart-count').innerText = totalQty;
-    }
-
-    function updateCartUI() {
-        const list = document.getElementById('cart-items');
-        let total = 0;
-        let html = '';
-        for (const [name, details] of Object.entries(cart)) {
-            if (details.qty > 0) {
-                let subtotal = details.price * details.qty;
-                total += subtotal;
-                html += `<div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-                            <span>${name} x ${details.qty}</span>
-                            <span>₹${subtotal}</span>
-                         </div>`;
-            }
-        }
-        list.innerHTML = html || '<p style="text-align:center;">Your basket is empty!</p>';
-        document.getElementById('total-price').innerText = total;
-        document.getElementById('pay-amount').innerText = total;
-    }
-
-    function processPayment() {
-        if(!document.getElementById('userName').value || !document.getElementById('userAddress').value) return alert("Please fill in details");
-        const total = document.getElementById('total-price').innerText;
-        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=store@upi&pn=TiffinTreats&am=${total}`;
-        document.getElementById('qr-code').src = qrUrl;
-        showPage('payment-page');
-    }
-
-    document.getElementById('razorpay-button').onclick = function() {
-        const total = document.getElementById('total-price').innerText;
-        var options = {
-            "key": "rzp_test_YOURID",
-            "amount": total * 100,
-            "currency": "INR",
-            "name": "Tiffin Treats",
-            "handler": function (response){ alert("Success! ID: " + response.razorpay_payment_id); }
-        };
-        new Razorpay(options).open();
-    };
+    document.getElementById('total').innerText = total;
+}
 </script>
+
 </body>
 </html>
