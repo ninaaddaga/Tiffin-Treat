@@ -5,26 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tiffin Treats</title>
 
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <style>
 :root {
     --accent-green: #2ecc71;
     --dark-green: #1b4d3e;
-    --glass: rgba(255, 255, 255, 0.9);
+    --glass: rgba(255,255,255,0.9);
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
     margin: 0;
+    font-family: 'Poppins', sans-serif;
     background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
     url('https://images.unsplash.com/photo-1543353071-873f17a7a088');
     background-size: cover;
     background-attachment: fixed;
 }
 
+/* ---------- HEADER ---------- */
 header {
     background: var(--glass);
     backdrop-filter: blur(10px);
@@ -43,57 +43,28 @@ h1 {
     font-weight: 800;
 }
 
-/* ---------- ABOUT DROPDOWN ---------- */
-
-.about-dropdown {
-    position: relative;
-}
-
-.about-btn {
+.btn {
     background: var(--dark-green);
     color: white;
     border: none;
-    padding: 10px 18px;
+    padding: 10px 20px;
     border-radius: 30px;
     cursor: pointer;
     font-weight: 600;
 }
 
-.about-content {
-    position: absolute;
-    right: 0;
-    top: 55px;
-    width: 320px;
-    background: white;
-    border-radius: 15px;
-    padding: 15px;
-    display: none;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+.btn:hover {
+    background: var(--accent-green);
 }
 
-.about-dropdown:hover .about-content {
-    display: flex;
-    gap: 15px;
+.cart-badge {
+    background: var(--accent-green);
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.8em;
 }
 
-.about-content img {
-    width: 90px;
-    height: 90px;
-    border-radius: 12px;
-    object-fit: cover;
-}
-
-.about-text strong {
-    color: var(--dark-green);
-}
-
-.about-text p {
-    font-size: 0.9em;
-    margin-top: 5px;
-}
-
-/* ---------- CONTAINER ---------- */
-
+/* ---------- CONTAINERS ---------- */
 .container {
     max-width: 500px;
     margin: 30px auto;
@@ -102,12 +73,15 @@ h1 {
     border-radius: 20px;
 }
 
+.hidden { display: none; }
+
 h2 {
     border-bottom: 2px solid var(--accent-green);
     padding-bottom: 8px;
     color: var(--dark-green);
 }
 
+/* ---------- MENU ---------- */
 .food-item {
     display: flex;
     justify-content: space-between;
@@ -123,49 +97,53 @@ h2 {
 .qty-controls {
     display: flex;
     align-items: center;
+    gap: 10px;
 }
 
 .qty-btn {
+    font-size: 1.5em;
     background: none;
     border: none;
-    font-size: 1.5em;
     cursor: pointer;
     color: var(--accent-green);
 }
 
-.btn {
-    background: var(--dark-green);
-    color: white;
+/* ---------- ABOUT SECTION ---------- */
+.about-section {
+    max-width: 900px;
+    margin: 60px auto;
+    background: var(--glass);
+    border-radius: 25px;
+    padding: 40px;
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+.about-section img {
+    width: 280px;
+    height: 280px;
+    border-radius: 25px;
+    object-fit: cover;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.about-text h2 {
     border: none;
-    width: 100%;
-    padding: 12px;
-    border-radius: 30px;
-    margin-top: 15px;
-    cursor: pointer;
+    margin-top: 0;
 }
 
-.btn:hover {
-    background: var(--accent-green);
+.about-text p {
+    line-height: 1.6;
+    font-size: 1.05em;
 }
 
-.cart-badge {
-    background: var(--accent-green);
-    color: white;
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-size: 0.8em;
-}
-
-.hidden {
-    display: none;
-}
-
-input, textarea {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+    .about-section {
+        flex-direction: column;
+        text-align: center;
+    }
 }
 </style>
 </head>
@@ -174,28 +152,9 @@ input, textarea {
 
 <header>
     <h1>🌿 Tiffin Treats</h1>
-
-    <div style="display:flex; gap:10px;">
-        <button class="btn" style="width:auto;" onclick="showPage('cart')">
-            Basket <span id="cart-count" class="cart-badge">0</span>
-        </button>
-
-        <div class="about-dropdown">
-            <button class="about-btn">About Us ▾</button>
-
-            <div class="about-content">
-                <img src="c6a270fa-f7f3-43c2-8ca0-fb075a5d7e31.jpeg" alt="About">
-                <div class="about-text">
-                    <strong>Founder</strong>
-                    <p>
-                        Tiffin Treats delivers fresh, hygienic,
-                        home-style meals cooked with love—perfect
-                        for daily comfort food.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+    <button class="btn" onclick="showPage('cart')">
+        Basket <span id="cart-count" class="cart-badge">0</span>
+    </button>
 </header>
 
 <!-- MENU -->
@@ -208,9 +167,9 @@ input, textarea {
             <span>₹120</span>
         </div>
         <div class="qty-controls">
-            <button class="qty-btn" onclick="updateQty('veg',120,-1)">−</button>
+            <button class="qty-btn" onclick="updateQty('veg',-1)">−</button>
             <span id="qty-veg">0</span>
-            <button class="qty-btn" onclick="updateQty('veg',120,1)">+</button>
+            <button class="qty-btn" onclick="updateQty('veg',1)">+</button>
         </div>
     </div>
 
@@ -220,9 +179,9 @@ input, textarea {
             <span>₹180</span>
         </div>
         <div class="qty-controls">
-            <button class="qty-btn" onclick="updateQty('chicken',180,-1)">−</button>
+            <button class="qty-btn" onclick="updateQty('chicken',-1)">−</button>
             <span id="qty-chicken">0</span>
-            <button class="qty-btn" onclick="updateQty('chicken',180,1)">+</button>
+            <button class="qty-btn" onclick="updateQty('chicken',1)">+</button>
         </div>
     </div>
 </div>
@@ -232,15 +191,26 @@ input, textarea {
     <h2>Your Basket</h2>
     <div id="cart-items"></div>
     <strong>Total: ₹<span id="total">0</span></strong>
-    <button class="btn" onclick="showPage('checkout')">Checkout</button>
+    <button class="btn" onclick="showPage('menu')">Back to Menu</button>
 </div>
 
-<!-- CHECKOUT -->
-<div id="checkout" class="container hidden">
-    <h2>Delivery Info</h2>
-    <input placeholder="Name">
-    <textarea placeholder="Address"></textarea>
-    <button class="btn">Place Order</button>
+<!-- ABOUT US (SCROLL DOWN) -->
+<div class="about-section">
+    <img src="c6a270fa-f7f3-43c2-8ca0-fb075a5d7e31.jpeg" alt="Founder">
+
+    <div class="about-text">
+        <h2>About Us</h2>
+        <p>
+            Hi! I’m the founder of <b>Tiffin Treats</b>.  
+            This kitchen was started with one simple goal —
+            to provide fresh, hygienic, and comforting home-style meals.
+        </p>
+        <p>
+            Every tiffin is prepared with care, quality ingredients,
+            and the warmth of home cooking, so you never miss
+            homemade food even on busy days.
+        </p>
+    </div>
 </div>
 
 <script>
@@ -255,10 +225,9 @@ function showPage(id) {
     updateCart();
 }
 
-function updateQty(key, price, change) {
-    let item = cart[key];
-    item.qty = Math.max(0, item.qty + change);
-    document.getElementById(`qty-${key}`).innerText = item.qty;
+function updateQty(key, change) {
+    cart[key].qty = Math.max(0, cart[key].qty + change);
+    document.getElementById(`qty-${key}`).innerText = cart[key].qty;
     updateBadge();
 }
 
@@ -279,7 +248,6 @@ function updateCart() {
             list.innerHTML += `<p>${item.name} × ${item.qty} — ₹${sub}</p>`;
         }
     }
-
     document.getElementById('total').innerText = total;
 }
 </script>
