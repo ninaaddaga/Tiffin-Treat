@@ -9,13 +9,12 @@
         :root {
             --accent-green: #2ecc71;
             --dark-green: #1b4d3e;
-            --glass: rgba(255, 255, 255, 0.9);
+            --glass: rgba(255, 255, 255, 0.92);
         }
 
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
-            /* Aesthetic food background */
             background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
                         url('https://images.unsplash.com/photo-1543353071-873f17a7a088?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
             background-size: cover;
@@ -27,16 +26,56 @@
         header {
             background: var(--glass);
             backdrop-filter: blur(10px);
-            padding: 20px;
-            text-align: center;
+            padding: 15px 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
         }
 
-        h1 { color: var(--dark-green); margin: 0; letter-spacing: 1px; font-weight: 800; }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
 
+        /* About Us Dropdown Styling */
+        #about-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            background: white;
+            border-radius: 0 0 20px 20px;
+            max-width: 500px;
+            margin: 0 auto;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        #about-dropdown.open {
+            max-height: 600px;
+            padding: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-green);
+            margin-bottom: 15px;
+        }
+
+        .about-text {
+            font-size: 0.9em;
+            line-height: 1.6;
+            color: #444;
+            font-style: italic;
+        }
+
+        /* Rest of the App Styling */
         .container {
             max-width: 500px;
             margin: 30px auto;
@@ -47,8 +86,6 @@
             box-shadow: 0 8px 32px rgba(0,0,0,0.3);
         }
 
-        h2 { border-bottom: 2px solid var(--accent-green); padding-bottom: 10px; color: var(--dark-green); }
-
         .food-item {
             display: flex;
             justify-content: space-between;
@@ -56,9 +93,6 @@
             padding: 20px 0;
             border-bottom: 1px solid rgba(0,0,0,0.1);
         }
-
-        .food-info strong { font-size: 1.1em; display: block; }
-        .food-info span { color: var(--accent-green); font-weight: bold; }
 
         .qty-controls {
             display: flex;
@@ -76,10 +110,7 @@
             font-size: 1.5em;
             cursor: pointer;
             padding: 0 10px;
-            transition: 0.3s;
         }
-
-        .qty-btn:hover { transform: scale(1.2); }
 
         .btn {
             background: var(--dark-green);
@@ -90,74 +121,56 @@
             cursor: pointer;
             font-weight: 600;
             transition: 0.3s;
-            width: 100%;
-            margin-top: 15px;
         }
 
-        .btn:hover { background: var(--accent-green); box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4); }
-
-        .cart-badge {
-            background: var(--accent-green);
-            color: white;
-            padding: 3px 10px;
-            border-radius: 50px;
-            font-size: 0.8em;
-            margin-left: 8px;
-        }
+        .btn:hover { background: var(--accent-green); }
 
         .hidden { display: none; }
-
-        input, textarea {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            box-sizing: border-box;
-        }
-
-        #qr-code {
-            border-radius: 15px;
-            margin: 20px 0;
-            background: white;
-            padding: 10px;
-        }
-
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; }
+        
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <header>
-    <h1>🌿 Tiffin Treats</h1>
-    <button class="btn" style="width: auto;" onclick="showPage('cart-page')">
-        My Basket <span id="cart-count" class="cart-badge">0</span>
-    </button>
+    <div class="header-content">
+        <div onclick="toggleAbout()" style="cursor: pointer; display: flex; flex-direction: column; align-items: center;">
+            <span style="font-size: 1.5em;">👤</span>
+            <small style="font-size: 0.6em; color: var(--accent-green); font-weight: bold;">ABOUT</small>
+        </div>
+        <h1 style="font-size: 1.5em; color: var(--dark-green); margin: 0;">🌿 Tiffin Treats</h1>
+        <button class="btn" style="padding: 8px 15px; font-size: 0.8em;" onclick="showPage('cart-page')">
+            🛒 <span id="cart-count">0</span>
+        </button>
+    </div>
 </header>
+
+<div id="about-dropdown">
+    <div style="text-align: center;">
+        <img src="https://via.placeholder.com/100" class="profile-img" alt="My Photo">
+        <h3>About Us</h3>
+        <p class="about-text">
+            "Tiffin Treats is a homemade food venture that brings the comfort of fresh, home-cooked meals straight to your plate. Every dish is prepared with care, quality ingredients, and authentic flavours that remind you of a homemade tiffin. From wholesome daily meals to delicious treats, Tiffin Treats focuses on taste, hygiene, and love in every bite. It’s not just food—it’s homemade happiness, packed and served with care."
+        </p>
+    </div>
+</div>
 
 <div id="menu-page" class="container">
     <h2>Our Kitchen</h2>
-    
     <div class="food-item">
-        <div class="food-info">
-            <strong>Standard Veg Thali</strong>
-            <span>₹120</span>
-        </div>
+        <div><strong>Standard Veg Thali</strong><br><span style="color: var(--accent-green);">₹120</span></div>
         <div class="qty-controls">
             <button class="qty-btn" onclick="updateQty('Veg Thali', 120, -1)">-</button>
-            <span id="qty-Veg Thali" style="font-weight: bold; min-width: 20px; text-align: center;">0</span>
+            <span id="qty-Veg Thali">0</span>
             <button class="qty-btn" onclick="updateQty('Veg Thali', 120, 1)">+</button>
         </div>
     </div>
-
     <div class="food-item">
-        <div class="food-info">
-            <strong>Special Chicken Thali</strong>
-            <span>₹180</span>
-        </div>
+        <div><strong>Special Chicken Thali</strong><br><span style="color: var(--accent-green);">₹180</span></div>
         <div class="qty-controls">
             <button class="qty-btn" onclick="updateQty('Chicken Thali', 180, -1)">-</button>
-            <span id="qty-Chicken Thali" style="font-weight: bold; min-width: 20px; text-align: center;">0</span>
+            <span id="qty-Chicken Thali">0</span>
             <button class="qty-btn" onclick="updateQty('Chicken Thali', 180, 1)">+</button>
         </div>
     </div>
@@ -167,35 +180,38 @@
     <h2>Your Basket</h2>
     <div id="cart-items"></div>
     <div style="display: flex; justify-content: space-between; margin-top: 20px; font-weight: 800; font-size: 1.2em;">
-        <span>Total</span>
-        <span>₹<span id="total-price">0</span></span>
+        <span>Total</span><span>₹<span id="total-price">0</span></span>
     </div>
-    <button class="btn" onclick="showPage('checkout-page')">Proceed to Checkout</button>
-    <p onclick="showPage('menu-page')" style="text-align: center; cursor: pointer; color: var(--accent-green); margin-top: 15px;">+ Add more food</p>
+    <button class="btn" style="width:100%; margin-top:20px;" onclick="showPage('checkout-page')">Proceed to Checkout</button>
 </div>
 
 <div id="checkout-page" class="container hidden">
     <h2>Delivery Info</h2>
     <input type="text" id="userName" placeholder="Your Name">
     <textarea id="userAddress" placeholder="Street Address, City, Pincode"></textarea>
-    <button class="btn" onclick="processPayment()">Confirm Order</button>
+    <button class="btn" style="width:100%;" onclick="processPayment()">Confirm Order</button>
 </div>
 
 <div id="payment-page" class="container hidden" style="text-align: center;">
     <h2>Payment</h2>
-    <p>Scan the QR to pay <strong>₹<span id="pay-amount">0</span></strong></p>
-    <img id="qr-code" src="" alt="Payment QR">
-    <button class="btn" id="razorpay-button">Pay Online with Razorpay</button>
+    <p>Scan to pay <strong>₹<span id="pay-amount">0</span></strong></p>
+    <img id="qr-code" src="" alt="Payment QR" style="background:white; padding:10px; border-radius:10px;">
+    <button class="btn" id="razorpay-button" style="width:100%; margin-top:20px;">Pay with Razorpay</button>
 </div>
 
 <script>
     let cart = {};
 
+    function toggleAbout() {
+        const dropdown = document.getElementById('about-dropdown');
+        dropdown.classList.toggle('open');
+    }
+
     function showPage(pageId) {
         document.querySelectorAll('.container').forEach(p => p.classList.add('hidden'));
         document.getElementById(pageId).classList.remove('hidden');
         if(pageId === 'cart-page') updateCartUI();
-        window.scrollTo(0,0);
+        document.getElementById('about-dropdown').classList.remove('open');
     }
 
     function updateQty(name, price, change) {
@@ -227,7 +243,7 @@
                          </div>`;
             }
         }
-        list.innerHTML = html || '<p style="text-align:center;">Your basket is empty!</p>';
+        list.innerHTML = html || '<p>Your basket is empty!</p>';
         document.getElementById('total-price').innerText = total;
         document.getElementById('pay-amount').innerText = total;
     }
