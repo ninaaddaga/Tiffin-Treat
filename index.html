@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiffin Treats | Aesthetic Food Delivery</title>
+    <title>Tiffin Treats | Homemade Happiness</title>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <style>
         :root {
             --accent-green: #2ecc71;
             --dark-green: #1b4d3e;
-            --glass: rgba(255, 255, 255, 0.92);
+            --glass: rgba(255, 255, 255, 0.94);
         }
 
         body {
@@ -41,7 +41,6 @@
             margin: 0 auto;
         }
 
-        /* About Us Dropdown Styling */
         #about-dropdown {
             max-height: 0;
             overflow: hidden;
@@ -50,32 +49,24 @@
             border-radius: 0 0 20px 20px;
             max-width: 500px;
             margin: 0 auto;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
         #about-dropdown.open {
-            max-height: 600px;
-            padding: 20px;
+            max-height: 800px;
+            padding: 25px;
             border-top: 1px solid #eee;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
         .profile-img {
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid var(--accent-green);
+            border: 4px solid var(--accent-green);
             margin-bottom: 15px;
         }
 
-        .about-text {
-            font-size: 0.9em;
-            line-height: 1.6;
-            color: #444;
-            font-style: italic;
-        }
-
-        /* Rest of the App Styling */
         .container {
             max-width: 500px;
             margin: 30px auto;
@@ -120,13 +111,17 @@
             border-radius: 50px;
             cursor: pointer;
             font-weight: 600;
-            transition: 0.3s;
+            width: 100%;
+            margin-top: 15px;
         }
 
-        .btn:hover { background: var(--accent-green); }
+        .whatsapp-btn {
+            background: #25D366;
+            margin-top: 10px;
+        }
 
         .hidden { display: none; }
-        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; font-family: inherit; }
         
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
@@ -135,34 +130,35 @@
 
 <header>
     <div class="header-content">
-        <div onclick="toggleAbout()" style="cursor: pointer; display: flex; flex-direction: column; align-items: center;">
-            <span style="font-size: 1.5em;">👤</span>
+        <div onclick="toggleAbout()" style="cursor: pointer; text-align: center;">
+            <span style="font-size: 1.2em;">👤</span><br>
             <small style="font-size: 0.6em; color: var(--accent-green); font-weight: bold;">ABOUT</small>
         </div>
-        <h1 style="font-size: 1.5em; color: var(--dark-green); margin: 0;">🌿 Tiffin Treats</h1>
-        <button class="btn" style="padding: 8px 15px; font-size: 0.8em;" onclick="showPage('cart-page')">
-            🛒 <span id="cart-count">0</span>
-        </button>
+        <h1 style="font-size: 1.4em; margin: 0;">🌿 Tiffin Treats</h1>
+        <div onclick="showPage('cart-page')" style="cursor: pointer; text-align: center;">
+            <span style="font-size: 1.2em;">🛒</span><br>
+            <small id="cart-count" style="font-size: 0.7em; background: var(--accent-green); color: white; padding: 1px 5px; border-radius: 10px;">0</small>
+        </div>
     </div>
 </header>
 
 <div id="about-dropdown">
     <div style="text-align: center;">
-        <img src="1656742818972 (1).jpeg" class="profile-img" alt="My Photo">
-        <h3>About Us</h3>
-        <p class="about-text">
+        <img src="https://via.placeholder.com/120" class="profile-img" alt="My Photo">
+        <h3 style="margin-top: 0;">Our Story</h3>
+        <p style="font-size: 0.9em; line-height: 1.6; color: #555; padding: 0 10px;">
             "Tiffin Treats is a homemade food venture that brings the comfort of fresh, home-cooked meals straight to your plate. Every dish is prepared with care, quality ingredients, and authentic flavours that remind you of a homemade tiffin. From wholesome daily meals to delicious treats, Tiffin Treats focuses on taste, hygiene, and love in every bite. It’s not just food—it’s homemade happiness, packed and served with care."
         </p>
     </div>
 </div>
 
 <div id="menu-page" class="container">
-    <h2>Our Kitchen</h2>
+    <h2 style="margin-top: 0;">Today's Menu</h2>
     <div class="food-item">
         <div><strong>Standard Veg Thali</strong><br><span style="color: var(--accent-green);">₹120</span></div>
         <div class="qty-controls">
             <button class="qty-btn" onclick="updateQty('Veg Thali', 120, -1)">-</button>
-            <span id="qty-Veg Thali">0</span>
+            <span id="qty-Veg Thali" style="min-width: 20px; text-align: center;">0</span>
             <button class="qty-btn" onclick="updateQty('Veg Thali', 120, 1)">+</button>
         </div>
     </div>
@@ -170,41 +166,46 @@
         <div><strong>Special Chicken Thali</strong><br><span style="color: var(--accent-green);">₹180</span></div>
         <div class="qty-controls">
             <button class="qty-btn" onclick="updateQty('Chicken Thali', 180, -1)">-</button>
-            <span id="qty-Chicken Thali">0</span>
+            <span id="qty-Chicken Thali" style="min-width: 20px; text-align: center;">0</span>
             <button class="qty-btn" onclick="updateQty('Chicken Thali', 180, 1)">+</button>
         </div>
     </div>
+    <button class="btn" onclick="showPage('cart-page')">View Basket</button>
 </div>
 
 <div id="cart-page" class="container hidden">
-    <h2>Your Basket</h2>
+    <h2 style="margin-top: 0;">Your Basket</h2>
     <div id="cart-items"></div>
-    <div style="display: flex; justify-content: space-between; margin-top: 20px; font-weight: 800; font-size: 1.2em;">
+    <div style="display: flex; justify-content: space-between; margin-top: 20px; font-weight: 800; font-size: 1.2em; border-top: 2px solid #eee; padding-top: 10px;">
         <span>Total</span><span>₹<span id="total-price">0</span></span>
     </div>
-    <button class="btn" style="width:100%; margin-top:20px;" onclick="showPage('checkout-page')">Proceed to Checkout</button>
+    <button class="btn" onclick="showPage('checkout-page')">Enter Delivery Details</button>
+    <button class="btn" style="background: none; color: var(--accent-green); border: 1px solid var(--accent-green);" onclick="showPage('menu-page')">Add More Items</button>
 </div>
 
 <div id="checkout-page" class="container hidden">
-    <h2>Delivery Info</h2>
-    <input type="text" id="userName" placeholder="Your Name">
-    <textarea id="userAddress" placeholder="Street Address, City, Pincode"></textarea>
-    <button class="btn" style="width:100%;" onclick="processPayment()">Confirm Order</button>
+    <h2 style="margin-top: 0;">Where to deliver?</h2>
+    <input type="text" id="userName" placeholder="Your Full Name">
+    <textarea id="userAddress" placeholder="Full Address with Pincode" rows="3"></textarea>
+    <button class="btn" onclick="processOrder()">Generate Payment QR</button>
 </div>
 
 <div id="payment-page" class="container hidden" style="text-align: center;">
-    <h2>Payment</h2>
-    <p>Scan to pay <strong>₹<span id="pay-amount">0</span></strong></p>
-    <img id="qr-code" src="" alt="Payment QR" style="background:white; padding:10px; border-radius:10px;">
-    <button class="btn" id="razorpay-button" style="width:100%; margin-top:20px;">Pay with Razorpay</button>
+    <h2 style="margin-top: 0;">Complete Payment</h2>
+    <p>Total to Pay: <strong>₹<span id="pay-amount">0</span></strong></p>
+    <img id="qr-code" src="" alt="Payment QR" style="background:white; padding:15px; border-radius:15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+    
+    <p style="font-size: 0.8em; color: #666; margin-top: 20px;">After paying, notify us on WhatsApp:</p>
+    <button class="btn whatsapp-btn" onclick="sendWhatsApp()">📱 Send Order to WhatsApp</button>
+    <button class="btn" id="razorpay-button" style="background: #3399cc;">Pay via Razorpay</button>
 </div>
 
 <script>
     let cart = {};
+    const MY_PHONE_NUMBER = "911234567890"; // <-- CHANGE THIS TO YOUR NUMBER
 
     function toggleAbout() {
-        const dropdown = document.getElementById('about-dropdown');
-        dropdown.classList.toggle('open');
+        document.getElementById('about-dropdown').classList.toggle('open');
     }
 
     function showPage(pageId) {
@@ -212,6 +213,7 @@
         document.getElementById(pageId).classList.remove('hidden');
         if(pageId === 'cart-page') updateCartUI();
         document.getElementById('about-dropdown').classList.remove('open');
+        window.scrollTo(0,0);
     }
 
     function updateQty(name, price, change) {
@@ -237,23 +239,45 @@
             if (details.qty > 0) {
                 let subtotal = details.price * details.qty;
                 total += subtotal;
-                html += `<div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-                            <span>${name} x ${details.qty}</span>
+                html += `<div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:0.9em;">
+                            <span>${name} (x${details.qty})</span>
                             <span>₹${subtotal}</span>
                          </div>`;
             }
         }
-        list.innerHTML = html || '<p>Your basket is empty!</p>';
+        list.innerHTML = html || '<p style="text-align:center; color:#999;">Your basket is empty!</p>';
         document.getElementById('total-price').innerText = total;
         document.getElementById('pay-amount').innerText = total;
     }
 
-    function processPayment() {
-        if(!document.getElementById('userName').value || !document.getElementById('userAddress').value) return alert("Please fill in details");
+    function processOrder() {
+        const name = document.getElementById('userName').value;
+        const address = document.getElementById('userAddress').value;
         const total = document.getElementById('total-price').innerText;
-        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=store@upi&pn=TiffinTreats&am=${total}`;
+
+        if(!name || !address) return alert("Please provide delivery details");
+        if(total == "0") return alert("Cart is empty!");
+
+        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=YOUR_UPI_ID@okicici&pn=TiffinTreats&am=${total}`;
         document.getElementById('qr-code').src = qrUrl;
         showPage('payment-page');
+    }
+
+    function sendWhatsApp() {
+        const name = document.getElementById('userName').value;
+        const address = document.getElementById('userAddress').value;
+        const total = document.getElementById('total-price').innerText;
+        
+        let orderDetails = "";
+        for (const [itemName, details] of Object.entries(cart)) {
+            if (details.qty > 0) {
+                orderDetails += `%0A- ${itemName}: ${details.qty} qty`;
+            }
+        }
+
+        const message = `*New Order - Tiffin Treats*%0A%0A*Name:* ${name}%0A*Address:* ${address}%0A*Order:* ${orderDetails}%0A%0A*Total Amount:* ₹${total}%0A%0A_Sent via Tiffin Treats App_`;
+        
+        window.open(`https://wa.me/${MY_PHONE_NUMBER}?text=${message}`, '_blank');
     }
 
     document.getElementById('razorpay-button').onclick = function() {
@@ -263,7 +287,10 @@
             "amount": total * 100,
             "currency": "INR",
             "name": "Tiffin Treats",
-            "handler": function (response){ alert("Success! ID: " + response.razorpay_payment_id); }
+            "handler": function (response){ 
+                alert("Order confirmed! Please send the details on WhatsApp.");
+                sendWhatsApp();
+            }
         };
         new Razorpay(options).open();
     };
