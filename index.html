@@ -3,108 +3,291 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiffin Treats | Cloud API Delivery</title>
+    <title>Tiffin Treats | Home-Cooked Happiness</title>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <style>
-        /* CSS remains same as aesthetic version for consistency */
-        :root { --accent-green: #2ecc71; --dark-green: #1b4d3e; --glass: rgba(255, 255, 255, 0.94); }
-        body { font-family: 'Poppins', sans-serif; margin: 0; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1543353071-873f17a7a088?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-attachment: fixed; min-height: 100vh; }
-        header { background: var(--glass); backdrop-filter: blur(10px); padding: 15px 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 1000; }
-        .container { max-width: 500px; margin: 30px auto; padding: 25px; background: var(--glass); backdrop-filter: blur(10px); border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
-        .btn { background: var(--dark-green); color: white; border: none; padding: 12px 25px; border-radius: 50px; cursor: pointer; width: 100%; margin-top: 15px; font-weight: 600; }
+        :root {
+            --accent-green: #2ecc71;
+            --dark-green: #1b4d3e;
+            --glass: rgba(255, 255, 255, 0.95);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                        url('https://images.unsplash.com/photo-1543353071-873f17a7a088?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            color: var(--dark-green);
+            min-height: 100vh;
+        }
+
+        /* HEADER & NAVIGATION */
+        header {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            padding: 12px 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .nav-icon {
+            cursor: pointer;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .nav-icon:hover { transform: translateY(-2px); color: var(--accent-green); }
+
+        /* ABOUT DROPDOWN */
+        #about-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            background: white;
+            border-radius: 0 0 20px 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        #about-dropdown.open {
+            max-height: 500px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* CHAT WIDGET */
+        .chat-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 2000;
+        }
+
+        .chat-button {
+            background: var(--accent-green);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            cursor: pointer;
+            border: none;
+        }
+
+        .chat-box {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 300px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            display: none;
+            overflow: hidden;
+        }
+
+        .chat-header { background: var(--dark-green); color: white; padding: 15px; font-weight: bold; }
+        .chat-body { padding: 15px; height: 200px; overflow-y: auto; font-size: 0.9em; background: #f9f9f9; }
+        .chat-input { display: flex; border-top: 1px solid #eee; }
+        .chat-input input { border: none; padding: 10px; flex: 1; outline: none; }
+
+        /* APP CONTAINERS */
+        .container {
+            max-width: 500px;
+            margin: 30px auto;
+            padding: 25px;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .food-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border-radius: 50px;
+            padding: 5px 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .qty-btn { background: none; border: none; color: var(--accent-green); font-size: 1.5em; cursor: pointer; padding: 0 10px; }
+        .btn { background: var(--dark-green); color: white; border: none; padding: 12px 25px; border-radius: 50px; cursor: pointer; font-weight: 600; width: 100%; margin-top: 15px; transition: 0.3s; }
+        .btn:hover { background: var(--accent-green); }
         .hidden { display: none; }
-        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 12px; box-sizing: border-box; }
+        
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <header>
-    <h1 style="color: var(--dark-green); margin: 0;">🌿 Tiffin Treats</h1>
+    <div class="header-content">
+        <div class="nav-icon" onclick="showPage('menu-page')">
+            <span style="font-size: 1.2em;">🏠</span><br>
+            <small style="font-size: 0.6em; font-weight: bold;">HOME</small>
+        </div>
+        
+        <h1 style="font-size: 1.4em; margin: 0; color: var(--dark-green);">🌿 Tiffin Treats</h1>
+
+        <div class="nav-icon" onclick="toggleAbout()">
+            <span style="font-size: 1.2em;">👤</span><br>
+            <small style="font-size: 0.6em; font-weight: bold;">ABOUT</small>
+        </div>
+    </div>
 </header>
 
-<div id="menu-page" class="container">
-    <h2>Menu</h2>
-    <div style="display:flex; justify-content:space-between; margin-bottom: 20px;">
-        <span>Standard Veg Thali (₹120)</span>
-        <button onclick="addToCart('Veg Thali', 120)" style="border-radius: 5px;">+ Add</button>
+<div id="about-dropdown">
+    <div style="text-align: center;">
+        <img src="https://via.placeholder.com/100" style="border-radius:50%; border:3px solid var(--accent-green); margin-bottom:10px;" alt="Me">
+        <p style="font-size: 0.85em; line-height: 1.6; color: #555; padding: 0 15px;">
+            "Tiffin Treats is a homemade food venture that brings the comfort of fresh, home-cooked meals straight to your plate. Every dish is prepared with care, quality ingredients, and authentic flavours."
+        </p>
     </div>
-    <button class="btn" onclick="showPage('checkout-page')">Checkout</button>
+</div>
+
+<div class="chat-widget">
+    <div class="chat-box" id="chatBox">
+        <div class="chat-header">Chat with us!</div>
+        <div class="chat-body" id="chatBody">
+            <p><strong>Tiffin Bot:</strong> Hello! How can we help you today?</p>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Type a message...">
+            <button onclick="sendMessage()" style="border:none; background:var(--accent-green); color:white; padding:10px;">Send</button>
+        </div>
+    </div>
+    <button class="chat-button" onclick="toggleChat()">💬</button>
+</div>
+
+<div id="menu-page" class="container">
+    <h2 style="margin-top: 0;">Today's Menu</h2>
+    <div class="food-item">
+        <div><strong>Standard Veg Thali</strong><br><span style="color: var(--accent-green);">₹120</span></div>
+        <div class="qty-controls">
+            <button class="qty-btn" onclick="updateQty('Veg Thali', 120, -1)">-</button>
+            <span id="qty-Veg Thali" style="min-width: 20px; text-align: center;">0</span>
+            <button class="qty-btn" onclick="updateQty('Veg Thali', 120, 1)">+</button>
+        </div>
+    </div>
+    <div class="food-item">
+        <div><strong>Special Chicken Thali</strong><br><span style="color: var(--accent-green);">₹180</span></div>
+        <div class="qty-controls">
+            <button class="qty-btn" onclick="updateQty('Chicken Thali', 180, -1)">-</button>
+            <span id="qty-Chicken Thali" style="min-width: 20px; text-align: center;">0</span>
+            <button class="qty-btn" onclick="updateQty('Chicken Thali', 180, 1)">+</button>
+        </div>
+    </div>
+    <button class="btn" onclick="showPage('cart-page')">Go to Cart 🛒 <span id="cart-badge-count">0</span></button>
+</div>
+
+<div id="cart-page" class="container hidden">
+    <h2>Your Basket</h2>
+    <div id="cart-items"></div>
+    <div style="display:flex; justify-content:space-between; margin-top:20px; font-weight:800; font-size:1.2em;">
+        <span>Total</span><span>₹<span id="total-price">0</span></span>
+    </div>
+    <button class="btn" onclick="showPage('checkout-page')">Buy Now</button>
 </div>
 
 <div id="checkout-page" class="container hidden">
-    <h2>Order Details</h2>
-    <input type="text" id="userName" placeholder="Your Name">
-    <textarea id="userAddress" placeholder="Delivery Address"></textarea>
-    <button class="btn" onclick="sendWhatsAppAPI()">Confirm & Pay</button>
+    <h2>Delivery Details</h2>
+    <input type="text" id="userName" placeholder="Full Name">
+    <textarea id="userAddress" placeholder="Address"></textarea>
+    <button class="btn" onclick="processPayment()">Proceed to Payment</button>
 </div>
 
-<div id="success-page" class="container hidden" style="text-align: center;">
-    <h2>Order Sent! 🌿</h2>
-    <p>Your order has been sent directly to our kitchen via WhatsApp Cloud API.</p>
-    <button class="btn" onclick="location.reload()">Order Again</button>
+<div id="payment-page" class="container hidden" style="text-align: center;">
+    <h2>Final Payment</h2>
+    <img id="qr-code" src="" style="background:white; padding:15px; border-radius:15px;" alt="QR">
+    <button class="btn" id="razorpay-button">Pay via Razorpay</button>
 </div>
 
 <script>
-    // --- CLOUD API CONFIGURATION ---
-    const WHATSAPP_TOKEN = "YOUR_ACCESS_TOKEN"; // Replace with your Meta Token
-    const PHONE_NUMBER_ID = "YOUR_PHONE_NUMBER_ID"; // Replace with your ID
-    const RECIPIENT_NUMBER = "91XXXXXXXXXX"; // Your phone number with country code
+    let cart = {};
 
-    let cart = [];
-
-    function addToCart(name, price) {
-        cart.push({name, price});
-        alert(name + " added!");
+    function toggleAbout() { document.getElementById('about-dropdown').classList.toggle('open'); }
+    function toggleChat() { 
+        let box = document.getElementById('chatBox');
+        box.style.display = (box.style.display === 'block') ? 'none' : 'block';
     }
 
     function showPage(pageId) {
         document.querySelectorAll('.container').forEach(p => p.classList.add('hidden'));
         document.getElementById(pageId).classList.remove('hidden');
+        if(pageId === 'cart-page') updateCartUI();
+        window.scrollTo(0,0);
     }
 
-    async function sendWhatsAppAPI() {
-        const name = document.getElementById('userName').value;
-        const address = document.getElementById('userAddress').value;
-
-        if(!name || !address) return alert("Please fill details");
-
-        const orderText = cart.map(item => item.name).join(", ");
-        
-        // WhatsApp Cloud API Payload
-        // Note: Using a "text" message. For production, Meta usually requires "template" messages for business-initiated chats.
-        const url = `https://graph.facebook.com/v17.0/${PHONE_NUMBER_ID}/messages`;
-        
-        const data = {
-            messaging_product: "whatsapp",
-            to: RECIPIENT_NUMBER,
-            type: "text",
-            text: {
-                body: `🍱 *New Order: Tiffin Treats*\n\nCustomer: ${name}\nAddress: ${address}\nItems: ${orderText}`
-            }
-        };
-
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${WHATSAPP_TOKEN}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-
-            if (response.ok) {
-                showPage('success-page');
-            } else {
-                const err = await response.json();
-                console.error(err);
-                alert("Error sending WhatsApp: " + err.error.message);
-            }
-        } catch (error) {
-            console.error(error);
-            alert("Connection failed.");
+    function updateQty(name, price, change) {
+        if (!cart[name]) cart[name] = { price: price, qty: 0 };
+        let newQty = cart[name].qty + change;
+        if (newQty >= 0 && newQty <= 9) {
+            cart[name].qty = newQty;
+            document.getElementById(`qty-${name}`).innerText = newQty;
+            document.getElementById('cart-badge-count').innerText = Object.values(cart).reduce((s,i)=>s+i.qty, 0);
         }
     }
+
+    function updateCartUI() {
+        const list = document.getElementById('cart-items');
+        let total = 0; let html = '';
+        for (const [name, details] of Object.entries(cart)) {
+            if (details.qty > 0) {
+                total += (details.price * details.qty);
+                html += `<p>${name} x ${details.qty} - ₹${details.price * details.qty}</p>`;
+            }
+        }
+        list.innerHTML = html || '<p>Empty basket!</p>';
+        document.getElementById('total-price').innerText = total;
+    }
+
+    function processPayment() {
+        const total = document.getElementById('total-price').innerText;
+        document.getElementById('qr-code').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=store@upi&am=${total}`;
+        showPage('payment-page');
+    }
+
+    function sendMessage() {
+        const input = document.getElementById('chatInput');
+        const body = document.getElementById('chatBody');
+        if(!input.value) return;
+        body.innerHTML += `<p><strong>You:</strong> ${input.value}</p>`;
+        input.value = '';
+        setTimeout(() => {
+            body.innerHTML += `<p><strong>Tiffin Bot:</strong> We've received your message! A human will reply shortly.</p>`;
+            body.scrollTop = body.scrollHeight;
+        }, 1000);
+    }
+
+    document.getElementById('razorpay-button').onclick = function() {
+        alert("Connecting to Razorpay...");
+    };
 </script>
 </body>
 </html>
