@@ -8,207 +8,204 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --sage: #556B2F;
-            --gold: #C5A059;
-            --cream: #FDFBF7;
-            --text-dark: #2C2C2C;
-            --text-light: #7A7A7A;
-            --border: #E5E0D8;
+            --sage: #4A5D23;
+            --gold: #D4AF37;
+            --overlay: rgba(255, 255, 255, 0.85);
+            --glass: rgba(255, 255, 255, 0.7);
         }
 
         body {
             font-family: 'Lato', sans-serif;
             margin: 0;
-            background-color: var(--cream);
-            color: var(--text-dark);
-            line-height: 1.6;
+            /* Added a warm, textured background */
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            color: #333;
         }
 
-        /* ELEGANT MINIMAL HEADER */
         header {
             background: white;
-            border-bottom: 1px solid var(--border);
-            padding: 30px 0;
+            padding: 25px 0;
             text-align: center;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
             position: sticky; top: 0; z-index: 1000;
         }
 
         .header-title {
             font-family: 'Playfair Display', serif;
             font-size: 2.2em;
-            letter-spacing: 1px;
             color: var(--sage);
             margin: 0;
-            text-transform: lowercase;
             font-style: italic;
+            cursor: pointer;
         }
 
         .status-badge {
             display: inline-block;
-            font-size: 0.7em;
-            letter-spacing: 2px;
-            padding: 4px 12px;
-            border-radius: 20px;
-            margin-top: 10px;
+            font-size: 0.75em;
+            letter-spacing: 1.5px;
+            padding: 5px 15px;
+            border-radius: 50px;
+            margin-top: 8px;
             text-transform: uppercase;
+            font-weight: 700;
         }
-        .open { background: #E8F5E9; color: #2E7D32; }
-        .closed { background: #FFEBEE; color: #C62828; }
+        .open { background: #e8f5e9; color: #2e7d32; }
+        .closed { background: #ffebee; color: #c62828; }
 
-        .nav-links {
-            margin-top: 15px;
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-        }
-        .nav-link { 
-            background: none; border: none; font-size: 0.8em; 
-            letter-spacing: 1px; color: var(--text-light); cursor: pointer;
-            text-decoration: none; border-bottom: 1px solid transparent;
-            transition: 0.3s;
-        }
-        .nav-link:hover { border-bottom: 1px solid var(--gold); color: var(--gold); }
-
-        /* HERO SECTION */
-        .hero {
-            text-align: center;
-            padding: 60px 20px;
-            border-bottom: 1px solid var(--border);
-        }
-        .hero p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.2em; color: var(--text-light); }
-
-        /* MENU LAYOUT */
         .container {
-            max-width: 700px; margin: 40px auto; padding: 20px;
-            background: white; border-radius: 4px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
-            margin-bottom: 100px;
+            max-width: 650px;
+            margin: 40px auto;
+            padding: 40px;
+            background: var(--overlay);
+            backdrop-filter: blur(10px); /* Frosted glass effect */
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            margin-bottom: 120px;
         }
 
         .category-title {
             font-family: 'Playfair Display', serif;
-            font-size: 1.5em;
+            font-size: 1.8em;
             color: var(--sage);
-            margin: 50px 0 20px 0;
             text-align: center;
-            border-bottom: 1px solid var(--border);
+            margin: 40px 0 20px;
+            border-bottom: 1px solid #ddd;
             padding-bottom: 10px;
         }
 
         .food-item {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 0; border-bottom: 1px dashed var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
 
-        .item-name { font-weight: 700; font-size: 1.05em; color: var(--text-dark); }
-        .item-price { color: var(--gold); font-family: 'Playfair Display', serif; }
+        .item-name { font-weight: 700; font-size: 1.1em; color: #2c3e50; }
+        .item-price { color: var(--gold); font-family: 'Playfair Display', serif; font-weight: 700; }
 
-        /* ELEGANT CONTROLS */
         .qty-controls {
-            display: flex; align-items: center; gap: 15px;
-            border: 1px solid var(--border); padding: 5px 12px; border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: white;
+            padding: 5px 15px;
+            border-radius: 25px;
+            border: 1px solid #eee;
         }
+
         .qty-btn { 
             background: none; border: none; color: var(--sage); 
-            font-size: 1.2em; cursor: pointer; transition: 0.2s;
+            font-size: 1.3em; cursor: pointer; font-weight: bold;
         }
-        .qty-btn:hover { color: var(--gold); }
 
-        /* FLOATING ACTION BAR */
         .floating-action {
-            position: fixed; bottom: 0; left: 0; right: 0;
-            background: white; padding: 20px;
-            border-top: 1px solid var(--border);
-            display: flex; justify-content: center;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
-            z-index: 1000;
+            position: fixed; bottom: 20px; left: 50%;
+            transform: translateX(-50%);
+            width: 90%; max-width: 500px;
+            background: var(--sage);
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            color: white; z-index: 2000;
+            cursor: pointer;
+            transition: 0.3s;
         }
+        .floating-action:hover { background: #3a4a1c; transform: translateX(-50%) translateY(-3px); }
 
-        .btn-primary {
-            background: var(--sage); color: white; border: none;
-            padding: 15px 60px; border-radius: 4px; font-family: 'Lato';
-            letter-spacing: 2px; text-transform: uppercase; font-weight: 700;
-            cursor: pointer; transition: 0.3s;
+        .btn-pay {
+            background: var(--gold);
+            color: white;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            margin-top: 20px;
+            text-transform: uppercase;
         }
-        .btn-primary:hover { background: var(--text-dark); }
 
         .hidden { display: none; }
         
-        /* WHATSAPP */
-        .wa-float {
-            position: fixed; bottom: 100px; right: 20px;
-            background: #25D366; width: 50px; height: 50px;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        input, textarea {
+            width: 100%; padding: 15px; margin: 10px 0; border: 1px solid #ddd;
+            border-radius: 8px; box-sizing: border-box; font-family: 'Lato';
+        }
+
+        /* Artistic Flourish */
+        .flourish {
+            text-align: center; font-family: 'Playfair Display', serif;
+            font-style: italic; color: #777; margin-bottom: 30px;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="header-title" onclick="showPage('menu-page')">tiffin treats</div>
+    <div class="header-title" onclick="location.reload()">tiffin treats</div>
     <div id="status-container"></div>
-    <div class="nav-links">
-        <button class="nav-link" onclick="showPage('menu-page')">THE MENU</button>
-        <button class="nav-link" onclick="showPage('cart-page')">MY BASKET</button>
-    </div>
 </header>
 
 <div id="menu-page">
-    <div class="hero">
-        <p>Small batches. Fresh ingredients. <br> Delivered with care from our home to yours.</p>
-    </div>
-
     <div class="container">
-        <div class="category-title">Paratha Thalis</div>
+        <div class="flourish">Handcrafted meals for your daily nourishment.</div>
+        
+        <div class="category-title">Signature Paratha Thalis</div>
         <div id="paratha-list"></div>
 
-        <div class="category-title">Daily Specials</div>
+        <div class="category-title">From Our Kitchen</div>
         <div id="others-list"></div>
 
-        <div class="category-title">Main Dishes</div>
+        <div class="category-title">Hearty Mains</div>
         <div id="main-list"></div>
     </div>
 </div>
 
-<div id="cart-page" class="container hidden" style="margin-top: 60px;">
-    <h2 style="font-family: 'Playfair Display'; text-align: center;">Your Selection</h2>
+<div id="cart-page" class="container hidden">
+    <h2 style="font-family: 'Playfair Display'; text-align: center; color: var(--sage);">Review Your Selection</h2>
     <div id="cart-items"></div>
-    <div style="text-align: center; margin-top: 30px; border-top: 1px solid var(--border); padding-top: 20px;">
-        <p style="letter-spacing: 2px;">TOTAL: <span style="font-size: 1.5em; color: var(--gold);">₹<span id="total-price">0</span></span></p>
-        <button class="btn-primary" onclick="showPage('checkout-page')">Proceed to Details</button>
+    <div style="margin-top: 30px; border-top: 2px solid var(--sage); padding-top: 20px;">
+        <h3 style="display:flex; justify-content:space-between; font-family: 'Playfair Display';">
+            Total Amount <span>₹<span id="total-price">0</span></span>
+        </h3>
     </div>
+    <button class="btn-pay" onclick="showPage('checkout-page')">Enter Delivery Details</button>
+    <p style="text-align: center; margin-top: 15px;">
+        <a href="#" onclick="showPage('menu-page')" style="color: var(--sage); text-decoration: none; font-size: 0.9em;">← Add more items</a>
+    </p>
 </div>
 
-<div id="checkout-page" class="container hidden" style="margin-top: 60px;">
-    <h2 style="font-family: 'Playfair Display'; text-align: center;">Delivery Particulars</h2>
-    <input type="text" id="custName" placeholder="Recipient Name" style="width:100%; padding:15px; margin-bottom:15px; border:1px solid var(--border);">
-    <textarea id="custAddr" placeholder="Delivery Address" rows="4" style="width:100%; padding:15px; border:1px solid var(--border); font-family: inherit;"></textarea>
-    <button class="btn-primary" style="width:100%; margin-top:20px" onclick="openPayment()">Pay & Finalize Order</button>
+<div id="checkout-page" class="container hidden">
+    <h2 style="font-family: 'Playfair Display'; text-align: center; color: var(--sage);">Delivery Details</h2>
+    <input type="text" id="custName" placeholder="Full Name">
+    <textarea id="custAddr" placeholder="Complete Address (with landmark)" rows="4"></textarea>
+    <button class="btn-pay" onclick="openPayment()">Proceed to Secure Payment</button>
 </div>
 
-<div class="floating-action" id="cart-strip">
-    <button class="btn-primary" onclick="showPage('cart-page')">
-        View Basket (₹<span id="nav-total">0</span>)
-    </button>
+<div id="cart-strip" class="floating-action hidden" onclick="showPage('cart-page')">
+    <span style="font-weight: 300; letter-spacing: 1px;">VIEW BASKET</span>
+    <span style="font-weight: 700;">₹<span id="nav-total">0</span></span>
 </div>
-
-<a href="https://wa.me/91XXXXXXXXXX" class="wa-float">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="25" alt="WA">
-</a>
 
 <script>
     const menuData = {
         paratha: [
             {n: "Pizza Paratha Thali", p: 199}, {n: "Aloo Paratha Thali", p: 150},
-            {n: "Paneer Paratha Thali", p: 180}, {n: "Sattu Paratha Thali", p: 150}
+            {n: "Paneer Paratha Thali", p: 180}, {n: "Aloo Pyaaz Paratha Thali", p: 150}
         ],
         others: [
             {n: "Deluxe Thali", p: 199}, {n: "Mini Meal", p: 160},
-            {n: "Ghee Tawa Roti", p: 25}
+            {n: "Puri (4 pcs) with Aloo Sabji", p: 150}
         ],
         main: [
-            {n: "Dal Fry (Full)", p: 320}, {n: "Paneer Butter Masala", p: 399}
+            {n: "Paneer Butter Masala (Full)", p: 399}, {n: "Dal Fry (Full)", p: 320}
         ]
     };
 
@@ -218,9 +215,9 @@
         const hour = new Date().getHours();
         const statusEl = document.getElementById('status-container');
         if (hour >= 9 && hour < 20) {
-            statusEl.innerHTML = `<span class="status-badge open">• Accepting Orders until 8:00 PM</span>`;
+            statusEl.innerHTML = `<span class="status-badge open">Open: Accepting Orders</span>`;
         } else {
-            statusEl.innerHTML = `<span class="status-badge closed">• Kitchen Closed (Opens at 9:00 AM)</span>`;
+            statusEl.innerHTML = `<span class="status-badge closed">Closed: Opening at 9:00 AM</span>`;
         }
     }
 
@@ -235,14 +232,13 @@
                         <div class="item-price">₹${item.p}</div>
                     </div>
                     <div class="qty-controls">
-                        <button class="qty-btn" onclick="updateQty('${item.n}', ${item.p}, -1)">-</button>
-                        <span id="qty-${item.n}">0</span>
+                        <button class="qty-btn" onclick="updateQty('${item.n}', ${item.p}, -1)">−</button>
+                        <span id="qty-${item.n}" style="min-width: 20px; text-align: center; font-weight: 700;">0</span>
                         <button class="qty-btn" onclick="updateQty('${item.n}', ${item.p}, 1)">+</button>
                     </div>
                 </div>`;
             });
-            let container = document.getElementById(cat + '-list');
-            if(container) container.innerHTML = html;
+            document.getElementById(cat + '-list').innerHTML = html;
         }
     }
 
@@ -261,29 +257,44 @@
         for(let key in cart) total += (cart[key].price * cart[key].qty);
         document.getElementById('nav-total').innerText = total;
         document.getElementById('total-price').innerText = total;
-        document.getElementById('cart-strip').style.display = total > 0 ? 'flex' : 'none';
+        document.getElementById('cart-strip').classList.toggle('hidden', total === 0);
     }
 
     function showPage(pageId) {
-        document.getElementById('menu-page').classList.add('hidden');
-        document.getElementById('cart-page').classList.add('hidden');
-        document.getElementById('checkout-page').classList.add('hidden');
+        document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
         document.getElementById(pageId).classList.remove('hidden');
+        document.getElementById('cart-strip').classList.toggle('hidden', pageId !== 'menu-page' || document.getElementById('nav-total').innerText === '0');
         
         if(pageId === 'cart-page') {
             let html = '';
             for(let key in cart) if(cart[key].qty > 0) {
-                html += `<div style="display:flex; justify-content:space-between; padding: 10px 0; border-bottom: 1px solid var(--border);">
-                            <span>${key} × ${cart[key].qty}</span>
-                            <span style="color:var(--gold)">₹${cart[key].price * cart[key].qty}</span>
+                html += `<div style="display:flex; justify-content:space-between; padding: 12px 0; border-bottom: 1px solid #eee;">
+                            <span>${key} <b>(x${cart[key].qty})</b></span>
+                            <span style="color:var(--gold); font-weight:700;">₹${cart[key].price * cart[key].qty}</span>
                          </div>`;
             }
-            document.getElementById('cart-items').innerHTML = html || '<p style="text-align:center">Your basket is currently empty.</p>';
+            document.getElementById('cart-items').innerHTML = html || '<p style="text-align:center; padding: 20px;">Your basket is empty.</p>';
         }
         window.scrollTo(0,0);
     }
 
-    // Initialize
+    function openPayment() {
+        if(!document.getElementById('custName').value || !document.getElementById('custAddr').value) {
+            return alert("Please provide your name and address for delivery.");
+        }
+        const amt = document.getElementById('total-price').innerText;
+        const options = {
+            "key": "rzp_test_YOUR_ID", 
+            "amount": amt * 100,
+            "currency": "INR",
+            "name": "Tiffin Treats",
+            "description": "Homemade Food Order",
+            "handler": function (response){ alert("Order Placed Successfully! ID: " + response.razorpay_payment_id); },
+            "theme": { "color": "#4A5D23" }
+        };
+        new Razorpay(options).open();
+    }
+
     checkStatus();
     renderMenu();
 </script>
