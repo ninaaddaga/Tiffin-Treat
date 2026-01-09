@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiffin Treats | Artisanal Homemade</title>
+    <title>Tiffin Treats | DNR Atmosphere</title>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --accent-green: #4A5D23;
             --gold: #D4AF37;
-            --glass: rgba(255, 255, 255, 0.97);
-            --veg-green: #008000;
+            --glass: rgba(255, 255, 255, 0.98);
         }
 
         body {
@@ -27,20 +26,19 @@
 
         header {
             background: var(--glass);
-            backdrop-filter: blur(12px);
             padding: 15px 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             position: sticky; top: 0; z-index: 1000;
         }
 
         .header-content {
             display: flex; justify-content: space-between; align-items: center;
-            max-width: 800px; margin: 0 auto;
+            max-width: 1000px; margin: 0 auto;
         }
 
         .brand-title {
             font-family: 'Playfair Display', serif;
-            font-size: 1.6em; font-weight: 700; color: var(--accent-green);
+            font-size: 1.8em; font-weight: 700; color: var(--accent-green);
             font-style: italic; margin: 0; cursor: pointer;
         }
 
@@ -48,13 +46,13 @@
             max-width: 600px; margin: 20px auto; padding: 25px;
             background: var(--glass); border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            margin-bottom: 120px; /* Space for floating bar */
+            margin-bottom: 150px;
         }
 
         .category-title {
-            font-family: 'Playfair Display', serif; font-size: 1.3em;
+            font-family: 'Playfair Display', serif; font-size: 1.4em;
             color: var(--accent-green); border-bottom: 2px solid var(--gold);
-            margin: 30px 0 15px; padding-bottom: 5px; text-transform: uppercase;
+            margin: 30px 0 15px; padding-bottom: 5px;
         }
 
         .food-item {
@@ -70,111 +68,102 @@
 
         .qty-btn { background: none; border: none; color: var(--accent-green); font-size: 1.2em; cursor: pointer; font-weight: bold; }
 
-        .btn-main {
-            background: var(--accent-green); color: white; border: none;
-            padding: 16px; border-radius: 50px; cursor: pointer;
-            width: 100%; font-weight: 600; text-transform: uppercase; margin-top: 15px;
-        }
-
         /* FLOATING BASKET BAR */
-        .floating-basket {
-            position: fixed; bottom: 85px; left: 50%; transform: translateX(-50%);
+        .floating-basket-bar {
+            position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%);
             width: 90%; max-width: 500px; background: var(--accent-green);
-            padding: 15px 25px; border-radius: 50px; color: white;
+            padding: 15px 25px; border-radius: 15px; color: white;
             display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4); z-index: 999; cursor: pointer;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5); z-index: 999; cursor: pointer;
         }
 
-        /* WHATSAPP BUTTON */
+        /* WHATSAPP FLOAT */
         .whatsapp-float {
             position: fixed; bottom: 20px; right: 20px;
-            background: #25d366; color: white; width: 55px; height: 55px;
+            background: #25d366; color: white; width: 60px; height: 60px;
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 28px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 1000;
-            text-decoration: none;
-        }
-
-        .eta-box {
-            background: rgba(74, 93, 35, 0.05); border: 1px dashed var(--accent-green);
-            border-radius: 15px; padding: 15px; margin: 15px 0; text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 1000; text-decoration: none;
         }
 
         .hidden { display: none !important; }
-        input, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: 1px solid #ccc; font-family: inherit; box-sizing: border-box; }
-        .cart-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; font-size: 0.9em; }
+        .btn-main { background: var(--accent-green); color: white; border: none; padding: 16px; border-radius: 12px; cursor: pointer; width: 100%; font-weight: 600; text-transform: uppercase; margin-top: 15px; }
+        input, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; font-family: inherit; }
     </style>
 </head>
 <body>
 
 <header>
     <div class="header-content">
-        <div onclick="toggleAbout()" style="cursor:pointer; font-size: 0.8em; font-weight: 600;">STORY</div>
+        <button onclick="toggleAbout()" style="background:none; border:none; font-weight:600; cursor:pointer;">STORY</button>
         <h1 class="brand-title" onclick="showPage('menu-page')">tiffin treats</h1>
-        <div onclick="showPage('cart-page')" style="cursor:pointer; font-size: 0.8em; font-weight: 600;">CART (<span id="cart-count-head">0</span>)</div>
+        <button onclick="showPage('cart-page')" style="background:none; border:none; font-weight:600; cursor:pointer;">CART</button>
     </div>
 </header>
 
 <div id="menu-page" class="container">
-    <div id="about-section" class="hidden" style="text-align: center; margin-bottom: 20px; font-style: italic; font-size: 0.9em;">
-        "Pure homemade taste, crafted at DNR Atmosphere, Whitefield."
+    <div id="about-section" class="hidden" style="text-align: center; font-style: italic; margin-bottom: 20px;">
+        "Homemade with love at DNR Atmosphere, Whitefield."
     </div>
 
-    <div class="category-title">Paratha Thali (2 pcs)</div>
+    <div class="category-title">Paratha Thalis (2 pcs)</div>
     <div id="paratha-list"></div>
 
-    <div class="category-title">Other Items</div>
-    <div id="others-list"></div>
-
-    <div class="category-title">Main Dishes</div>
+    <div class="category-title">Main Course</div>
     <div id="main-list"></div>
 
-    <div class="category-title">Pre-Order Menu</div>
-    <div id="preorder-list"></div>
+    <div class="category-title">Combos & Thalis</div>
+    <div id="thali-list"></div>
+
+    <div class="category-title">Sides & Breads</div>
+    <div id="sides-list"></div>
 
     <div class="category-title">Beverages</div>
     <div id="beverage-list"></div>
 </div>
 
 <div id="cart-page" class="container hidden">
-    <h2 style="font-family: 'Playfair Display'; text-align: center;">Your Basket</h2>
-    <div id="cart-display"></div>
-    <h3 style="display:flex; justify-content:space-between; margin-top: 20px; border-top: 2px solid var(--accent-green); padding-top: 10px;">
-        Total <span>₹<span id="total-price">0</span></span>
+    <h2 style="font-family: 'Playfair Display'; text-align: center;">Your Order</h2>
+    <div id="cart-items-details"></div>
+    <h3 style="display:flex; justify-content:space-between; margin-top: 20px; border-top: 2px solid #4A5D23; padding-top: 10px;">
+        Total <span>₹<span id="final-total">0</span></span>
     </h3>
-    <button class="btn-main" onclick="showPage('checkout-page')">Delivery Info</button>
+    <button class="btn-main" onclick="showPage('checkout-page')">Enter Delivery Details</button>
 </div>
 
 <div id="checkout-page" class="container hidden">
     <h2 style="font-family: 'Playfair Display'; text-align: center;">Delivery</h2>
     <input type="text" id="custName" placeholder="Full Name">
-    <textarea id="custAddr" placeholder="Full Address (Flat, Society, Area)" rows="3"></textarea>
+    <textarea id="custAddr" placeholder="Complete Address (Society, Flat No, Landmark)" rows="3"></textarea>
     
-    <div id="eta-box" class="eta-box hidden">
-        <div style="font-weight: 700; font-size: 0.8em; color: var(--accent-green);">ESTIMATED ARRIVAL</div>
-        <div id="eta-text" style="font-size: 1.2em; color: var(--gold); font-weight: 600; margin: 5px 0;">Live Time + 20m Buffer</div>
-        <a id="maps-link" href="#" target="_blank" style="font-size: 0.75em; color: var(--accent-green); text-decoration: underline;">View Live Traffic Route</a>
+    <div id="eta-info" class="hidden" style="background:#f9f9f9; padding:15px; border-radius:10px; text-align:center; margin:15px 0; border:1px dashed var(--accent-green);">
+        <div style="font-weight:700; color:var(--accent-green);">LIVE ETA</div>
+        <div style="font-size:1.2em; color:var(--gold); font-weight:600;">Live Traffic + 20m Prep Buffer</div>
+        <a id="maps-route" href="#" target="_blank" style="font-size:0.8em; color:var(--accent-green);">View Route on Maps</a>
     </div>
 
-    <button class="btn-main" onclick="calculateOrder()">Proceed to Payment</button>
+    <button class="btn-main" onclick="finalizeOrder()">Check ETA & Pay</button>
 </div>
 
 <div id="payment-page" class="container hidden" style="text-align: center;">
-    <h2 style="font-family: 'Playfair Display';">Complete Payment</h2>
-    <img id="qr-code" src="" style="background:white; padding:15px; border-radius:15px; width: 160px; margin: 15px 0;" alt="UPI QR">
+    <h2 style="font-family: 'Playfair Display';">Payment</h2>
+    <img id="qr-code" src="" style="width:180px; margin:20px 0; border: 1px solid #eee; padding: 10px; background: #fff;">
     <button class="btn-main" id="rzp-button">Pay with Razorpay</button>
 </div>
 
-<div id="floating-basket" class="floating-basket hidden" onclick="showPage('cart-page')">
-    <span style="font-weight: 600;">VIEW BASKET</span>
-    <span style="font-weight: 600;">₹<span id="nav-total">0</span></span>
+<div id="floating-bar" class="floating-basket-bar hidden" onclick="showPage('cart-page')">
+    <div>
+        <span id="items-count-float" style="background:white; color:var(--accent-green); padding:2px 8px; border-radius:10px; font-weight:700; margin-right:10px;">0</span>
+        <span style="font-weight:600; letter-spacing:1px;">VIEW BASKET</span>
+    </div>
+    <span style="font-weight:700;">₹<span id="total-float">0</span></span>
 </div>
 
-<a href="https://wa.me/YOUR_NUMBER" class="whatsapp-float" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="35" alt="WA">
+<a href="https://wa.me/YOUR_PHONE_NUMBER" class="whatsapp-float" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="35" alt="WhatsApp">
 </a>
 
 <script>
-    const menuData = {
+    const fullMenu = {
         paratha: [
             {n: "Pizza Paratha Thali", p: 199}, {n: "Aloo Paratha Thali", p: 150},
             {n: "Aloo Pyaaz Paratha Thali", p: 150}, {n: "Paneer Paratha Thali", p: 180},
@@ -182,21 +171,21 @@
             {n: "Methi Paratha Thali", p: 150}, {n: "Mix Paratha Thali", p: 150},
             {n: "Sattu Paratha Thali", p: 150}
         ],
-        others: [
-            {n: "Plain Paratha (1 pc)", p: 35}, {n: "Ghee Tawa Roti (1 pc)", p: 25},
-            {n: "Puri (4 pcs) with Aloo Sabji", p: 150}, {n: "Mini Meal (Dal, Sabji, 4 Roti)", p: 160},
-            {n: "Deluxe Thali", p: 199}, {n: "Supreme Thali", p: 249}
-        ],
         main: [
-            {n: "Dal Fry (Half)", p: 160}, {n: "Dal Fry (Full)", p: 320},
-            {n: "Paneer Butter Masala (Half)", p: 200}, {n: "Paneer Butter Masala (Full)", p: 399},
+            {n: "Dal Fry (Full)", p: 320}, {n: "Dal Fry (Half)", p: 160},
+            {n: "Paneer Butter Masala (Full)", p: 399}, {n: "Paneer Butter Masala (Half)", p: 200},
             {n: "Kadai Paneer (Full)", p: 399}, {n: "Palak Paneer (Full)", p: 399},
-            {n: "Dum Aloo (Full)", p: 340}, {n: "Kadhi Pakoda (Full)", p: 320}
+            {n: "Dum Aloo (Full)", p: 340}, {n: "Kadhi Pakoda (Full)", p: 320},
+            {n: "Punjabi Chhole (Full)", p: 350}, {n: "Rajma (Full)", p: 350}
         ],
-        preorder: [
-            {n: "Punjabi Chhole (Full)", p: 350}, {n: "Rajma (Full)", p: 350},
-            {n: "Chhole Bhature (2 pcs)", p: 200}, {n: "Dal Makhni (Full)", p: 380},
+        thali: [
+            {n: "Mini Meal (Dal, Sabji, 4 Roti)", p: 160}, {n: "Deluxe Thali", p: 199},
+            {n: "Supreme Thali", p: 249}, {n: "Chhole Bhature (2 pcs)", p: 200},
             {n: "Pav Bhaji (3 pcs)", p: 200}
+        ],
+        sides: [
+            {n: "Plain Paratha (1 pc)", p: 35}, {n: "Ghee Tawa Roti (1 pc)", p: 25},
+            {n: "Puri (4 pcs) with Aloo Sabji", p: 150}, {n: "Plain Rice", p: 100}, {n: "Jeera Rice", p: 130}
         ],
         beverage: [
             {n: "Butter Milk", p: 50}, {n: "Sweet Lassi", p: 70},
@@ -209,11 +198,11 @@
     function toggleAbout() { document.getElementById('about-section').classList.toggle('hidden'); }
 
     function renderMenu() {
-        for (let cat in menuData) {
+        for (let cat in fullMenu) {
             let html = '';
-            menuData[cat].forEach(item => {
+            fullMenu[cat].forEach(item => {
                 html += `<div class="food-item">
-                    <div style="font-size:0.95em;"><b>${item.n}</b><br><span style="color:var(--gold)">₹${item.p}</span></div>
+                    <div><b>${item.n}</b><br><small>₹${item.p}</small></div>
                     <div class="qty-controls">
                         <button class="qty-btn" onclick="updateQty('${item.n}', ${item.p}, -1)">−</button>
                         <span id="qty-${item.n}" style="font-weight:600">0</span>
@@ -221,8 +210,7 @@
                     </div>
                 </div>`;
             });
-            const el = document.getElementById(cat + '-list');
-            if(el) el.innerHTML = html;
+            document.getElementById(cat + '-list').innerHTML = html;
         }
     }
 
@@ -238,13 +226,12 @@
     function updateTotals() {
         let total = 0, count = 0;
         for(let key in cart) { total += (cart[key].price * cart[key].qty); count += cart[key].qty; }
-        document.getElementById('cart-count-head').innerText = count;
-        document.getElementById('nav-total').innerText = total;
-        document.getElementById('total-price').innerText = total;
+        document.getElementById('final-total').innerText = total;
+        document.getElementById('total-float').innerText = total;
+        document.getElementById('items-count-float').innerText = count;
         
-        // Show/Hide Floating Basket
         const isMenu = !document.getElementById('menu-page').classList.contains('hidden');
-        document.getElementById('floating-basket').classList.toggle('hidden', total === 0 || !isMenu);
+        document.getElementById('floating-bar').classList.toggle('hidden', count === 0 || !isMenu);
     }
 
     function showPage(pageId) {
@@ -254,34 +241,36 @@
         if(pageId === 'cart-page') {
             let html = '';
             for(let key in cart) if(cart[key].qty > 0) {
-                html += `<div class="cart-row"><span>${key} (x${cart[key].qty})</span><span>₹${cart[key].price * cart[key].qty}</span></div>`;
+                html += `<div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #eee;">
+                    <span>${key} (x${cart[key].qty})</span><span>₹${cart[key].price * cart[key].qty}</span>
+                </div>`;
             }
-            document.getElementById('cart-display').innerHTML = html || '<p style="text-align:center">Empty</p>';
+            document.getElementById('cart-items-details').innerHTML = html || '<p style="text-align:center">Empty</p>';
         }
         updateTotals();
         window.scrollTo(0,0);
     }
 
-    function calculateOrder() {
+    function finalizeOrder() {
         const addr = document.getElementById('custAddr').value;
-        if(!addr) return alert("Enter address");
+        if(!addr) return alert("Please enter your address.");
         
         const origin = "DNR Atmosphere, Whitefield, Bengaluru";
-        document.getElementById('maps-link').href = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(addr)}`;
-        document.getElementById('eta-box').classList.remove('hidden');
+        document.getElementById('maps-route').href = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(addr)}`;
+        document.getElementById('eta-info').classList.remove('hidden');
 
-        const amt = document.getElementById('total-price').innerText;
+        const amt = document.getElementById('final-total').innerText;
         document.getElementById('qr-code').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=YOUR_ID@upi&am=${amt}`;
         
-        setTimeout(() => showPage('payment-page'), 2000);
+        setTimeout(() => showPage('payment-page'), 2500);
     }
 
     document.getElementById('rzp-button').onclick = function() {
         var options = {
             "key": "rzp_test_YOUR_ID",
-            "amount": document.getElementById('total-price').innerText * 100,
+            "amount": document.getElementById('final-total').innerText * 100,
             "name": "Tiffin Treats",
-            "handler": function (res){ alert("Order Sent!"); },
+            "handler": function (res){ alert("Order Placed!"); },
             "theme": { "color": "#4A5D23" }
         };
         new Razorpay(options).open();
