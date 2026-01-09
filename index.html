@@ -10,7 +10,7 @@
         :root {
             --accent-green: #4A5D23;
             --gold: #D4AF37;
-            --glass: rgba(255, 255, 255, 0.94);
+            --glass: rgba(255, 255, 255, 0.96);
             --veg-green: #008000;
         }
 
@@ -59,13 +59,6 @@
             margin-bottom: 120px;
         }
 
-        .eta-box {
-            background: rgba(74, 93, 35, 0.08);
-            border: 1px solid var(--accent-green);
-            border-radius: 15px; padding: 15px;
-            margin: 20px 0; text-align: center;
-        }
-
         .category-title {
             font-family: 'Playfair Display', serif; font-size: 1.4em;
             color: var(--accent-green); border-bottom: 1px solid #ddd;
@@ -92,8 +85,21 @@
             transition: 0.3s; margin-top: 20px; text-transform: uppercase;
         }
 
+        .eta-box {
+            background: rgba(74, 93, 35, 0.08);
+            border: 1px solid var(--accent-green);
+            border-radius: 15px; padding: 15px;
+            margin: 20px 0; text-align: center;
+        }
+
         .hidden { display: none; }
         input, textarea { width: 100%; padding: 14px; margin: 10px 0; border-radius: 10px; border: 1px solid #ddd; box-sizing: border-box; font-family: inherit; }
+        
+        #cart-items-list p {
+            display: flex; justify-content: space-between;
+            border-bottom: 1px dashed #ccc; padding: 8px 0;
+            margin: 0; font-size: 0.95em;
+        }
     </style>
 </head>
 <body>
@@ -111,49 +117,72 @@
 
 <div id="menu-page" class="container">
     <div id="about-section" class="hidden">
-        <p style="font-style: italic; color: #555; text-align: center;">"Handcrafted meals from DNR Atmosphere, Whitefield. Purely homemade."</p>
+        <p style="font-style: italic; color: #555; text-align: center;">"Homemade meals from DNR Atmosphere, Whitefield. Prepared with love."</p>
     </div>
 
-    <div class="category-title">Signature Paratha Thalis</div>
+    <div class="category-title">Paratha Thali</div>
     <div id="paratha-list"></div>
 
     <div class="category-title">Main Dishes</div>
     <div id="main-list"></div>
+
+    <div class="category-title">Pre-Order Specials</div>
+    <div id="preorder-list"></div>
+
+    <div class="category-title">Beverages</div>
+    <div id="beverage-list"></div>
 </div>
 
 <div id="cart-page" class="container hidden">
     <h2 style="font-family: 'Playfair Display'; text-align: center;">Your Selection</h2>
-    <div id="cart-items"></div>
-    <div style="border-top: 2px solid #eee; padding-top: 15px; margin-top: 20px;">
-        <h3 style="display:flex; justify-content:space-between">Total <span>₹<span id="total-price">0</span></span></h3>
+    <div id="cart-items-list"></div>
+    <div style="border-top: 2px solid var(--accent-green); padding-top: 15px; margin-top: 20px;">
+        <h3 style="display:flex; justify-content:space-between">Total Amount <span>₹<span id="total-price">0</span></span></h3>
     </div>
-    <button class="btn-main" onclick="showPage('checkout-page')">Add Delivery Details</button>
+    <button class="btn-main" onclick="showPage('checkout-page')">Delivery Details</button>
 </div>
 
 <div id="checkout-page" class="container hidden">
-    <h2 style="font-family: 'Playfair Display'; text-align: center;">Where should we deliver?</h2>
+    <h2 style="font-family: 'Playfair Display'; text-align: center;">Delivery Address</h2>
     <input type="text" id="custName" placeholder="Recipient Name">
-    <textarea id="custAddr" placeholder="Enter your full address (Society, Flat No, Area)" rows="4"></textarea>
+    <textarea id="custAddr" placeholder="Flat No, Society Name, Area" rows="4"></textarea>
     
-    <div id="auto-eta-box" class="eta-box hidden">
-        <div style="font-size: 0.7em; font-weight: 700; color: var(--accent-green);">ESTIMATED DELIVERY TIME</div>
-        <p style="font-size: 0.9em; margin: 5px 0;">Click below to see live traffic for your address:</p>
-        <a id="dynamic-map-link" href="#" target="_blank" style="color: var(--gold); font-weight: 600; text-decoration: none;">📍 Check Route on Google Maps</a>
+    <div id="live-eta-box" class="eta-box hidden">
+        <div style="font-size: 0.7em; font-weight: 700; color: var(--accent-green); letter-spacing: 1px;">ESTIMATED ARRIVAL</div>
+        <div style="margin: 10px 0;">
+            <span id="eta-display" style="font-size: 1.4em; color: var(--gold); font-weight: 600;">--</span>
+            <div style="font-size: 0.8em; color: #666;">Includes 20 mins preparation buffer</div>
+        </div>
+        <a id="maps-route" href="#" target="_blank" style="font-size: 0.8em; color: var(--accent-green); text-decoration: underline;">Open Google Maps Route</a>
     </div>
 
-    <button class="btn-main" onclick="prepareOrder()">Confirm & Pay</button>
+    <button class="btn-main" onclick="processOrder()">Confirm Order</button>
 </div>
 
 <div id="payment-page" class="container hidden" style="text-align: center;">
-    <h2 style="font-family: 'Playfair Display';">Complete Payment</h2>
+    <h2 style="font-family: 'Playfair Display';">Finalize Order</h2>
     <img id="qr-code" src="" style="background:white; padding:15px; border-radius:15px; width: 180px; margin: 20px 0;" alt="UPI QR">
-    <button class="btn-main" id="rzp-button">Secure Online Payment</button>
+    <button class="btn-main" id="rzp-button">Pay with Razorpay</button>
 </div>
 
 <script>
     const menuData = {
-        paratha: [{n: "Pizza Paratha Thali", p: 199}, {n: "Aloo Paratha Thali", p: 150}],
-        main: [{n: "Paneer Butter Masala", p: 399}, {n: "Dal Fry", p: 320}]
+        paratha: [
+            {n: "Pizza Paratha Thali", p: 199}, {n: "Aloo Paratha Thali", p: 150},
+            {n: "Aloo Pyaaz Paratha Thali", p: 150}, {n: "Paneer Paratha Thali", p: 180},
+            {n: "Sattu Paratha Thali", p: 150}
+        ],
+        main: [
+            {n: "Dal Fry (Full)", p: 320}, {n: "Paneer Butter Masala", p: 399},
+            {n: "Kadai Paneer", p: 399}, {n: "Mini Meal", p: 160}
+        ],
+        preorder: [
+            {n: "Punjabi Chhole", p: 350}, {n: "Rajma Chawal", p: 250},
+            {n: "Chhole Bhature (2 pcs)", p: 200}
+        ],
+        beverage: [
+            {n: "Butter Milk", p: 50}, {n: "Sweet Lassi", p: 70}
+        ]
     };
 
     let cart = {};
@@ -196,43 +225,55 @@
     function showPage(pageId) {
         document.querySelectorAll('.container').forEach(p => p.classList.add('hidden'));
         document.getElementById(pageId).classList.remove('hidden');
-        window.scrollTo(0,0);
+        
+        if(pageId === 'cart-page') {
+            let html = '';
+            for(let key in cart) {
+                if(cart[key].qty > 0) {
+                    html += `<p><span>${key} (x${cart[key].qty})</span> <span>₹${cart[key].price * cart[key].qty}</span></p>`;
+                }
+            }
+            document.getElementById('cart-items-list').innerHTML = html || '<p>Your basket is empty.</p>';
+        }
     }
 
-    // AUTOMATIC LOCATION LOGIC
-    function prepareOrder() {
+    function processOrder() {
         const address = document.getElementById('custAddr').value;
-        if(!address) return alert("Please enter an address first.");
+        if(!address) return alert("Please enter your address.");
 
-        // Clean the address for the URL
-        const encodedAddr = encodeURIComponent(address);
-        const origin = encodeURIComponent("DNR Atmosphere, Whitefield, Bengaluru");
+        // ETA Calculation Logic
+        const origin = "DNR Atmosphere, Whitefield, Bengaluru";
+        const mapUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(address)}&travelmode=driving`;
         
-        // This link tells Google Maps to calculate the time from DNR to the user's address
-        const mapURL = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${encodedAddr}&travelmode=driving`;
-        
-        document.getElementById('dynamic-map-link').href = mapURL;
-        document.getElementById('auto-eta-box').classList.remove('hidden');
-        
-        // After showing the map option, move to payment
+        document.getElementById('maps-route').href = mapUrl;
+        document.getElementById('eta-display').innerText = "Calculating + 20m buffer...";
+        document.getElementById('live-eta-box').classList.remove('hidden');
+
+        // Logic for Payment Page
         const total = document.getElementById('total-price').innerText;
         document.getElementById('qr-code').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=YOUR_ID@upi&am=${total}`;
-        showPage('payment-page');
+        
+        // Short delay to show the ETA before switching to payment
+        setTimeout(() => showPage('payment-page'), 2000);
     }
 
-    // Razorpay Logic
     document.getElementById('rzp-button').onclick = function() {
         var options = {
             "key": "rzp_test_YOUR_ID",
             "amount": document.getElementById('total-price').innerText * 100,
             "name": "Tiffin Treats",
-            "handler": function (res){ alert("Order Placed!"); },
+            "handler": function (res){ alert("Order Placed Successfully!"); },
             "theme": { "color": "#4A5D23" }
         };
         new Razorpay(options).open();
     };
 
     renderMenu();
+    // Kitchen Status Logic
+    const hr = new Date().getHours();
+    document.getElementById('status-container').innerHTML = (hr >= 9 && hr < 20) 
+        ? '<span class="status-badge open">Open for Orders</span>' 
+        : '<span class="status-badge closed">Kitchen Closed</span>';
 </script>
 </body>
 </html>
