@@ -44,14 +44,6 @@
             font-style: italic; margin: 0; cursor: pointer;
         }
 
-        .status-badge {
-            font-size: 0.65em; letter-spacing: 1px; padding: 3px 10px;
-            border-radius: 20px; text-transform: uppercase; font-weight: 700;
-            display: block; margin-top: 5px;
-        }
-        .open { background: #e8f5e9; color: #2e7d32; }
-        .closed { background: #ffebee; color: #c62828; }
-
         .container {
             max-width: 600px; margin: 25px auto; padding: 30px;
             background: var(--glass); border-radius: 20px;
@@ -67,7 +59,7 @@
 
         .food-item {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 0; border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.05);
         }
 
         .qty-controls {
@@ -95,38 +87,37 @@
         .hidden { display: none; }
         input, textarea { width: 100%; padding: 14px; margin: 10px 0; border-radius: 10px; border: 1px solid #ddd; box-sizing: border-box; font-family: inherit; }
         
-        #cart-items-list p {
-            display: flex; justify-content: space-between;
-            border-bottom: 1px dashed #ccc; padding: 8px 0;
-            margin: 0; font-size: 0.95em;
-        }
+        .cart-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
     </style>
 </head>
 <body>
 
 <header>
     <div class="header-content">
-        <button style="background:none; border:none; cursor:pointer;" onclick="toggleAbout()">Our Story</button>
+        <button style="background:none; border:none; cursor:pointer; font-weight:600;" onclick="toggleAbout()">Our Story</button>
         <div style="text-align:center">
             <h1 class="brand-title" onclick="showPage('menu-page')">tiffin treats</h1>
             <div id="status-container"></div>
         </div>
-        <button style="background:none; border:none; cursor:pointer;" onclick="showPage('cart-page')">Basket (<span id="cart-count">0</span>)</button>
+        <button style="background:none; border:none; cursor:pointer; font-weight:600;" onclick="showPage('cart-page')">Basket (<span id="cart-count">0</span>)</button>
     </div>
 </header>
 
 <div id="menu-page" class="container">
-    <div id="about-section" class="hidden">
-        <p style="font-style: italic; color: #555; text-align: center;">"Homemade meals from DNR Atmosphere, Whitefield. Prepared with love."</p>
+    <div id="about-section" class="hidden" style="text-align: center; padding-bottom: 20px;">
+        <p style="font-style: italic; color: #555;">"Hand-picked ingredients and a mother's care, delivered from DNR Atmosphere."</p>
     </div>
 
-    <div class="category-title">Paratha Thali</div>
+    <div class="category-title">Paratha Thalis (2 pcs)</div>
     <div id="paratha-list"></div>
+
+    <div class="category-title">Other Items</div>
+    <div id="others-list"></div>
 
     <div class="category-title">Main Dishes</div>
     <div id="main-list"></div>
 
-    <div class="category-title">Pre-Order Specials</div>
+    <div class="category-title">Pre-Order Menu</div>
     <div id="preorder-list"></div>
 
     <div class="category-title">Beverages</div>
@@ -134,33 +125,33 @@
 </div>
 
 <div id="cart-page" class="container hidden">
-    <h2 style="font-family: 'Playfair Display'; text-align: center;">Your Selection</h2>
-    <div id="cart-items-list"></div>
+    <h2 style="font-family: 'Playfair Display'; text-align: center;">Review Your Order</h2>
+    <div id="cart-display"></div>
     <div style="border-top: 2px solid var(--accent-green); padding-top: 15px; margin-top: 20px;">
         <h3 style="display:flex; justify-content:space-between">Total Amount <span>₹<span id="total-price">0</span></span></h3>
     </div>
-    <button class="btn-main" onclick="showPage('checkout-page')">Delivery Details</button>
+    <button class="btn-main" onclick="showPage('checkout-page')">Confirm Delivery Address</button>
 </div>
 
 <div id="checkout-page" class="container hidden">
-    <h2 style="font-family: 'Playfair Display'; text-align: center;">Delivery Address</h2>
-    <input type="text" id="custName" placeholder="Recipient Name">
-    <textarea id="custAddr" placeholder="Flat No, Society Name, Area" rows="4"></textarea>
+    <h2 style="font-family: 'Playfair Display'; text-align: center;">Delivery Details</h2>
+    <input type="text" id="custName" placeholder="Full Name">
+    <textarea id="custAddr" placeholder="Complete Address (Society, Flat No, Landmark)" rows="4"></textarea>
     
-    <div id="live-eta-box" class="eta-box hidden">
-        <div style="font-size: 0.7em; font-weight: 700; color: var(--accent-green); letter-spacing: 1px;">ESTIMATED ARRIVAL</div>
+    <div id="eta-box" class="eta-box hidden">
+        <div style="font-size: 0.7em; font-weight: 700; color: var(--accent-green);">ESTIMATED ARRIVAL TIME</div>
         <div style="margin: 10px 0;">
-            <span id="eta-display" style="font-size: 1.4em; color: var(--gold); font-weight: 600;">--</span>
-            <div style="font-size: 0.8em; color: #666;">Includes 20 mins preparation buffer</div>
+            <span id="eta-text" style="font-size: 1.3em; color: var(--gold); font-weight: 600;">Calculating...</span>
+            <div style="font-size: 0.8em; color: #666; margin-top: 4px;">Includes 20 mins preparation buffer</div>
         </div>
-        <a id="maps-route" href="#" target="_blank" style="font-size: 0.8em; color: var(--accent-green); text-decoration: underline;">Open Google Maps Route</a>
+        <a id="maps-link" href="#" target="_blank" style="font-size: 0.8em; color: var(--accent-green); text-decoration: underline;">Open Google Maps for Live Traffic</a>
     </div>
 
-    <button class="btn-main" onclick="processOrder()">Confirm Order</button>
+    <button class="btn-main" onclick="calculateETA()">Proceed to Payment</button>
 </div>
 
 <div id="payment-page" class="container hidden" style="text-align: center;">
-    <h2 style="font-family: 'Playfair Display';">Finalize Order</h2>
+    <h2 style="font-family: 'Playfair Display';">Final Step</h2>
     <img id="qr-code" src="" style="background:white; padding:15px; border-radius:15px; width: 180px; margin: 20px 0;" alt="UPI QR">
     <button class="btn-main" id="rzp-button">Pay with Razorpay</button>
 </div>
@@ -170,18 +161,28 @@
         paratha: [
             {n: "Pizza Paratha Thali", p: 199}, {n: "Aloo Paratha Thali", p: 150},
             {n: "Aloo Pyaaz Paratha Thali", p: 150}, {n: "Paneer Paratha Thali", p: 180},
+            {n: "Gobhi Paratha Thali", p: 150}, {n: "Muli Paratha Thali", p: 150},
+            {n: "Methi Paratha Thali", p: 150}, {n: "Mix Paratha Thali", p: 150},
             {n: "Sattu Paratha Thali", p: 150}
         ],
+        others: [
+            {n: "Plain Paratha (1 pc)", p: 35}, {n: "Ghee Tawa Roti (1 pc)", p: 25},
+            {n: "Puri (4 pcs) with Aloo Sabji", p: 150}, {n: "Mini Meal", p: 160},
+            {n: "Deluxe Thali", p: 199}, {n: "Supreme Thali", p: 249}
+        ],
         main: [
-            {n: "Dal Fry (Full)", p: 320}, {n: "Paneer Butter Masala", p: 399},
-            {n: "Kadai Paneer", p: 399}, {n: "Mini Meal", p: 160}
+            {n: "Dal Fry", p: 320}, {n: "Paneer Butter Masala", p: 399},
+            {n: "Kadai Paneer", p: 399}, {n: "Palak Paneer", p: 399},
+            {n: "Dum Aloo", p: 340}, {n: "Kadhi Pakoda", p: 320}
         ],
         preorder: [
-            {n: "Punjabi Chhole", p: 350}, {n: "Rajma Chawal", p: 250},
-            {n: "Chhole Bhature (2 pcs)", p: 200}
+            {n: "Punjabi Chhole", p: 350}, {n: "Rajma", p: 350},
+            {n: "Chhole Bhature (2 pcs)", p: 200}, {n: "Dal Makhni", p: 380},
+            {n: "Pav Bhaji (3 pcs)", p: 200}
         ],
         beverage: [
-            {n: "Butter Milk", p: 50}, {n: "Sweet Lassi", p: 70}
+            {n: "Butter Milk", p: 50}, {n: "Sweet Lassi", p: 70},
+            {n: "Cold Coffee", p: 99}, {n: "Lemonade", p: 50}
         ]
     };
 
@@ -202,7 +203,8 @@
                     </div>
                 </div>`;
             });
-            document.getElementById(cat + '-list').innerHTML = html;
+            const target = document.getElementById(cat + '-list');
+            if(target) target.innerHTML = html;
         }
     }
 
@@ -230,30 +232,29 @@
             let html = '';
             for(let key in cart) {
                 if(cart[key].qty > 0) {
-                    html += `<p><span>${key} (x${cart[key].qty})</span> <span>₹${cart[key].price * cart[key].qty}</span></p>`;
+                    html += `<div class="cart-row"><span>${key} x ${cart[key].qty}</span><span>₹${cart[key].price * cart[key].qty}</span></div>`;
                 }
             }
-            document.getElementById('cart-items-list').innerHTML = html || '<p>Your basket is empty.</p>';
+            document.getElementById('cart-display').innerHTML = html || '<p style="text-align:center">Basket is empty</p>';
         }
+        window.scrollTo(0,0);
     }
 
-    function processOrder() {
-        const address = document.getElementById('custAddr').value;
-        if(!address) return alert("Please enter your address.");
-
-        // ETA Calculation Logic
+    function calculateETA() {
+        const addr = document.getElementById('custAddr').value;
+        if(!addr) return alert("Please enter delivery address.");
+        
         const origin = "DNR Atmosphere, Whitefield, Bengaluru";
-        const mapUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(address)}&travelmode=driving`;
+        const mapURL = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(addr)}&travelmode=driving`;
         
-        document.getElementById('maps-route').href = mapUrl;
-        document.getElementById('eta-display').innerText = "Calculating + 20m buffer...";
-        document.getElementById('live-eta-box').classList.remove('hidden');
+        document.getElementById('maps-link').href = mapURL;
+        document.getElementById('eta-text').innerText = "Live Time + 20m Buffer";
+        document.getElementById('eta-box').classList.remove('hidden');
 
-        // Logic for Payment Page
-        const total = document.getElementById('total-price').innerText;
-        document.getElementById('qr-code').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=YOUR_ID@upi&am=${total}`;
-        
-        // Short delay to show the ETA before switching to payment
+        // Logic for QR Code
+        const amt = document.getElementById('total-price').innerText;
+        document.getElementById('qr-code').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=YOUR_ID@upi&am=${amt}`;
+
         setTimeout(() => showPage('payment-page'), 2000);
     }
 
@@ -262,18 +263,15 @@
             "key": "rzp_test_YOUR_ID",
             "amount": document.getElementById('total-price').innerText * 100,
             "name": "Tiffin Treats",
-            "handler": function (res){ alert("Order Placed Successfully!"); },
+            "handler": function (res){ alert("Order Successful!"); },
             "theme": { "color": "#4A5D23" }
         };
         new Razorpay(options).open();
     };
 
     renderMenu();
-    // Kitchen Status Logic
     const hr = new Date().getHours();
-    document.getElementById('status-container').innerHTML = (hr >= 9 && hr < 20) 
-        ? '<span class="status-badge open">Open for Orders</span>' 
-        : '<span class="status-badge closed">Kitchen Closed</span>';
+    document.getElementById('status-container').innerHTML = (hr >= 9 && hr < 21) ? '<span style="color:green; font-size:0.7em;">● Kitchen Open</span>' : '<span style="color:red; font-size:0.7em;">● Kitchen Closed</span>';
 </script>
 </body>
 </html>
