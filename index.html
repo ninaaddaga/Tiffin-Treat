@@ -3,86 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiffin Treats | Order Online</title>
+    <title>Tiffin Treats | Premium Homemade</title>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --accent-green: #2ecc71;
-            --dark-green: #1b4d3e;
-            --veg-green: #008000;
-            --glass: rgba(255, 255, 255, 0.98);
+            --futuristic-green: #2ecc71;
+            --gold: #f1c40f;
+            --dark-bg: rgba(10, 25, 20, 0.95);
+            --glass: rgba(255, 255, 255, 0.1);
         }
 
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
                         url('https://images.unsplash.com/photo-1543353071-873f17a7a088?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover; background-attachment: fixed; color: #333;
+            background-size: cover; background-attachment: fixed;
+            color: #eee;
         }
 
-        /* CLEANER HEADER */
+        /* FUTURISTIC GLASS HEADER */
         header {
             background: var(--glass);
-            padding: 15px 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 20px 0;
             position: sticky; top: 0; z-index: 1000;
         }
 
         .header-content {
             display: flex; justify-content: space-around; align-items: center;
-            max-width: 900px; margin: 0 auto;
+            max-width: 1000px; margin: 0 auto;
         }
 
         .header-title {
-            font-size: 1.6em; font-weight: 800; color: var(--dark-green);
-            cursor: pointer; letter-spacing: -1px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5em; font-weight: 700; color: var(--futuristic-green);
+            letter-spacing: 3px; cursor: pointer;
+            text-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
         }
 
         .nav-link { 
-            background: none; border: none; font-weight: 600; 
-            color: #666; cursor: pointer; font-size: 0.8em;
+            background: none; border: none; font-weight: 400; 
+            color: #aaa; cursor: pointer; font-size: 0.7em; letter-spacing: 2px;
+            transition: 0.3s;
         }
+        .nav-link:hover { color: var(--gold); }
 
         .info-strip {
-            background: #fdf2e9; text-align: center; padding: 5px;
-            font-size: 0.7em; font-weight: 700; color: #d35400;
+            background: rgba(46, 204, 113, 0.2); text-align: center; padding: 5px;
+            font-size: 0.7em; letter-spacing: 1px; color: var(--gold);
         }
 
-        /* FLOATING CONTACT BUTTON */
-        .contact-hover {
+        /* FLOATING WHATSAPP BUTTON */
+        .whatsapp-hover {
             position: fixed; bottom: 30px; left: 20px;
-            background: var(--accent-green); color: white;
-            padding: 15px 20px; border-radius: 50px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            text-decoration: none; font-weight: 700; font-size: 0.9em;
-            z-index: 2000; border: none; cursor: pointer;
+            background: #25D366; color: white;
+            width: 60px; height: 60px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
+            z-index: 2000; text-decoration: none; font-size: 30px;
         }
 
         /* FLOATING CART BUTTON */
         .floating-cart {
             position: fixed; bottom: 30px; right: 20px;
-            background: var(--dark-green); color: white;
-            padding: 15px 25px; border-radius: 50px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            background: var(--futuristic-green); color: black;
+            padding: 15px 25px; border-radius: 15px;
+            box-shadow: 0 0 20px rgba(46, 204, 113, 0.3);
             cursor: pointer; z-index: 2000; font-weight: 700; border: none;
+            font-family: 'Orbitron', sans-serif; font-size: 0.8em;
         }
 
         .container {
-            max-width: 600px; margin: 20px auto; padding: 25px;
-            background: var(--glass); border-radius: 20px;
+            max-width: 600px; margin: 40px auto; padding: 30px;
+            background: var(--dark-bg); border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
             margin-bottom: 120px;
         }
 
         .category-title {
-            font-size: 1em; font-weight: 800; color: var(--dark-green);
-            border-left: 4px solid var(--accent-green); padding-left: 10px;
-            margin: 30px 0 15px 0; text-transform: uppercase;
+            font-family: 'Orbitron', sans-serif; font-size: 0.9em; 
+            color: var(--gold); margin: 40px 0 20px 0; letter-spacing: 2px;
+            border-bottom: 1px solid rgba(241, 196, 15, 0.3); padding-bottom: 10px;
         }
 
         .food-item {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 12px 0; border-bottom: 1px solid #eee;
+            padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
         .veg-icon {
@@ -92,91 +102,97 @@
         .veg-dot { width: 6px; height: 6px; background: var(--veg-green); border-radius: 50%; }
 
         .qty-controls {
-            display: flex; align-items: center; border: 1px solid #ddd;
-            border-radius: 50px; padding: 2px 12px; background: white;
+            display: flex; align-items: center; gap: 15px;
+            background: rgba(255,255,255,0.05); padding: 5px 15px; border-radius: 10px;
         }
 
-        .qty-btn { background: none; border: none; color: var(--accent-green); font-size: 1.2em; cursor: pointer; }
+        .qty-btn { background: none; border: none; color: var(--futuristic-green); font-size: 1.5em; cursor: pointer; }
         
         .btn { 
-            background: var(--dark-green); color: white; border: none; 
-            padding: 18px; border-radius: 50px; cursor: pointer; 
-            font-weight: 700; width: 100%; margin-top: 20px; font-size: 1em;
+            background: var(--futuristic-green); color: black; border: none; 
+            padding: 20px; border-radius: 12px; cursor: pointer; 
+            font-weight: 700; width: 100%; margin-top: 20px; font-family: 'Orbitron', sans-serif;
+            transition: 0.3s;
         }
+        .btn:hover { background: var(--gold); transform: scale(1.02); }
 
         .hidden { display: none; }
-        input, textarea { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; }
+        input, textarea { 
+            width: 100%; padding: 15px; margin: 10px 0; border-radius: 10px; 
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); 
+            color: white; box-sizing: border-box; 
+        }
         
-        #about-section { display: none; text-align: center; padding: 20px; background: #fff; border-bottom: 1px solid #eee; }
+        #about-section { display: none; text-align: center; padding: 30px; background: var(--dark-bg); }
     </style>
 </head>
 <body>
 
 <header>
     <div class="header-content">
-        <button class="nav-link" onclick="toggleAbout()">ABOUT</button>
+        <button class="nav-link" onclick="toggleAbout()">STORY</button>
         <div class="header-title" onclick="showPage('menu-page')">TIFFIN TREATS</div>
-        <button class="nav-link" onclick="showPage('cart-page')">MY CART</button>
+        <button class="nav-link" onclick="showPage('cart-page')">BASKET</button>
     </div>
 </header>
 
-<div class="info-strip">9 AM - 8 PM • PAY IN ADVANCE REQUIRED</div>
+<div class="info-strip">OPERATIONAL: 09:00 - 20:00 • ADVANCE SECURE PAYMENT</div>
 
 <div id="about-section">
-    <p style="font-size: 0.9em; line-height: 1.5; color: #444;">
-        Homemade happiness delivered to your doorstep. Fresh ingredients, authentic flavours.
+    <p style="font-size: 0.9em; color: #888; letter-spacing: 1px;">
+        "Tiffin Treats is a homemade food venture that brings the comfort of fresh, home-cooked meals straight to your plate. Packed and served with care."
     </p>
 </div>
 
-<a href="tel:+91XXXXXXXXXX" class="contact-hover">📞 CONTACT US</a>
+<a href="https://wa.me/91XXXXXXXXXX" class="whatsapp-hover" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="35" alt="WA">
+</a>
 
 <button id="floatCart" class="floating-cart" onclick="showPage('cart-page')">
-    BASKET: ₹<span id="nav-total">0</span>
+    TOTAL: ₹<span id="nav-total">0</span>
 </button>
 
 <div id="menu-page" class="container">
-    <div class="category-title">Paratha Thali</div>
-    <div style="font-size: 0.8em; margin-bottom: 15px; background: #f9f9f9; padding: 10px; border-radius: 8px;">
-        <input type="checkbox" id="gheeCheck" onchange="updateTotal()"> Add Ghee (+₹20 per Thali)
+    <div class="category-title">PARATHA THALI</div>
+    <div style="font-size: 0.75em; margin-bottom: 20px; color: var(--gold);">
+        <input type="checkbox" id="gheeCheck" onchange="updateTotal()"> UPGRADE TO GHEE (+₹20/THALI)
     </div>
     <div id="paratha-list"></div>
 
-    <div class="category-title">Other Items</div>
+    <div class="category-title">DAILY SPECIALS</div>
     <div id="others-list"></div>
 
-    <div class="category-title">Main Dishes</div>
+    <div class="category-title">MAIN DISHES</div>
     <div id="main-list"></div>
 
-    <div class="category-title">Pre-Order Menu</div>
+    <div class="category-title">PRE-ORDER (24H)</div>
     <div id="preorder-list"></div>
 
-    <div class="category-title">Beverages</div>
+    <div class="category-title">BEVERAGES</div>
     <div id="beverages-list"></div>
 </div>
 
 <div id="cart-page" class="container hidden">
-    <h2 style="margin-top:0">Review Order</h2>
+    <h2 style="font-family: 'Orbitron'; color: var(--gold);">REVIEW BASKET</h2>
     <div id="cart-items"></div>
-    <div style="border-top: 2px solid #333; margin-top: 20px; padding-top: 20px;">
-        <h3 style="display:flex; justify-content:space-between;">Total Amount: <span>₹<span id="total-price">0</span></span></h3>
+    <div style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 20px; padding-top: 20px;">
+        <h3 style="display:flex; justify-content:space-between; font-family:'Orbitron'">TOTAL: <span>₹<span id="total-price">0</span></span></h3>
     </div>
-    <button class="btn" onclick="showPage('checkout-page')">ENTER ADDRESS</button>
-    <button class="btn" style="background:none; color:#333" onclick="showPage('menu-page')">← ADD MORE ITEMS</button>
+    <button class="btn" onclick="showPage('checkout-page')">CONFIRM DETAILS</button>
 </div>
 
 <div id="checkout-page" class="container hidden">
-    <h2 style="margin-top:0">Delivery Address</h2>
-    <input type="text" id="custName" placeholder="Your Name">
-    <textarea id="custAddr" placeholder="Complete Address with Pincode" rows="4"></textarea>
-    <button class="btn" onclick="openPayment()">PROCEED TO PAY</button>
+    <h2 style="font-family: 'Orbitron'; color: var(--gold);">DELIVERY INFO</h2>
+    <input type="text" id="custName" placeholder="Full Name">
+    <textarea id="custAddr" placeholder="Complete Address" rows="4"></textarea>
+    <button class="btn" onclick="openPayment()">GENERATE SECURE QR</button>
 </div>
 
 <div id="payment-page" class="container hidden" style="text-align: center;">
-    <h2 style="margin-top:0">Complete Payment</h2>
-    <p>Scan to Pay via UPI</p>
+    <h2 style="font-family: 'Orbitron'; color: var(--gold);">SECURE PAYMENT</h2>
+    <p style="color:#888">Complete payment to finalize order</p>
     <img id="qr-code" src="" style="background:white; padding:15px; border-radius:15px; width:200px" alt="QR">
-    <p>OR</p>
-    <button class="btn" id="razorpay-btn">PAY WITH RAZORPAY</button>
+    <button class="btn" id="razorpay-btn">LAUNCH RAZORPAY GATEWAY</button>
 </div>
 
 <script>
@@ -214,13 +230,12 @@
                 html += `
                 <div class="food-item">
                     <div>
-                        <div class="veg-icon"><div class="veg-dot"></div></div>
-                        <span class="food-name">${item.n}</span>
-                        <span class="food-price">₹${item.p}</span>
+                        <span style="font-weight:600">${item.n}</span>
+                        <div style="color:var(--futuristic-green); font-size:0.8em">₹${item.p}</div>
                     </div>
                     <div class="qty-controls">
                         <button class="qty-btn" onclick="updateQty('${item.n}', ${item.p}, -1)">-</button>
-                        <span id="qty-${item.n}" style="margin:0 10px; font-weight:bold">0</span>
+                        <span id="qty-${item.n}" style="min-width:15px; text-align:center">0</span>
                         <button class="qty-btn" onclick="updateQty('${item.n}', ${item.p}, 1)">+</button>
                     </div>
                 </div>`;
@@ -248,9 +263,9 @@
         let total = 0;
         const ghee = document.getElementById('gheeCheck').checked;
         for(let key in cart) {
-            let itemPrice = cart[key].price;
-            if (ghee && key.includes("Thali") && key.includes("Paratha")) itemPrice += 20;
-            total += (itemPrice * cart[key].qty);
+            let p = cart[key].price;
+            if (ghee && key.includes("Thali") && key.includes("Paratha")) p += 20;
+            total += (p * cart[key].qty);
         }
         document.getElementById('nav-total').innerText = total;
         document.getElementById('total-price').innerText = total;
@@ -267,42 +282,34 @@
             for(let key in cart) if(cart[key].qty > 0) {
                 let p = cart[key].price;
                 if(ghee && key.includes("Thali") && key.includes("Paratha")) p += 20;
-                html += `<div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-                            <span>${key} x ${cart[key].qty}</span>
-                            <span>₹${p * cart[key].qty}</span>
+                html += `<div style="display:flex; justify-content:space-between; margin-bottom:15px">
+                            <span>${key} (x${cart[key].qty})</span>
+                            <span style="color:var(--gold)">₹${p * cart[key].qty}</span>
                          </div>`;
             }
-            document.getElementById('cart-items').innerHTML = html || 'Your basket is empty';
+            document.getElementById('cart-items').innerHTML = html || 'EMPTY BASKET';
         }
         window.scrollTo(0,0);
     }
 
     function openPayment() {
-        if(!document.getElementById('custName').value) return alert("Enter your name");
+        if(!document.getElementById('custName').value) return alert("REQUIRED: NAME");
         const total = document.getElementById('total-price').innerText;
-        document.getElementById('qr-code').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=YOUR_UPI_ID@upi&am=${total}`;
+        document.getElementById('qr-code').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=YOUR_UPI@upi&am=${total}`;
         showPage('payment-page');
     }
 
-    // RAZORPAY INTEGRATION FIXED
     document.getElementById('razorpay-btn').onclick = function(e) {
         const amt = document.getElementById('total-price').innerText;
-        if(amt == "0") return alert("Cart is empty");
-
         const options = {
-            "key": "rzp_test_YOUR_ID", // Replace with your Live Key later
+            "key": "rzp_test_YOUR_ID", 
             "amount": amt * 100,
             "currency": "INR",
             "name": "Tiffin Treats",
-            "description": "Food Order Payment",
-            "handler": function (response){
-                alert("Payment Successful! Order ID: " + response.razorpay_payment_id);
-            },
-            "theme": { "color": "#1b4d3e" }
+            "handler": function (response){ alert("ORDER SECURED: " + response.razorpay_payment_id); },
+            "theme": { "color": "#2ecc71" }
         };
-        const rzp = new Razorpay(options);
-        rzp.open();
-        e.preventDefault();
+        new Razorpay(options).open();
     };
 
     renderMenu();
