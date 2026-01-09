@@ -24,32 +24,41 @@
         header {
             background: var(--glass); backdrop-filter: blur(10px);
             padding: 12px 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            position: sticky; top: 0; z-index: 1000; text-align: center;
+            position: sticky; top: 0; z-index: 1000;
+        }
+
+        .header-content {
+            display: flex; justify-content: space-between; align-items: center;
+            max-width: 800px; margin: 0 auto;
         }
 
         .header-title {
-            font-size: 1.5em; font-weight: 800; color: var(--dark-green);
-            cursor: pointer; text-decoration: none; display: inline-block;
+            font-size: 1.4em; font-weight: 800; color: var(--dark-green);
+            cursor: pointer; margin: 0;
         }
 
-        .info-bar { font-size: 0.75em; color: #666; margin-top: 5px; font-weight: 600; }
-        .pay-notice { color: #d35400; font-weight: bold; }
+        .nav-btn { cursor: pointer; text-align: center; background: none; border: none; font-family: inherit; }
+
+        .info-bar { font-size: 0.75em; color: #666; text-align: center; padding: 5px; background: rgba(255,255,255,0.8); font-weight: 600; }
+        .pay-notice { color: #d35400; }
+
+        /* ABOUT DROPDOWN */
+        #about-dropdown {
+            max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out;
+            background: white; border-bottom: 1px solid #eee; text-align: center;
+        }
+        #about-dropdown.open { max-height: 500px; padding: 20px; }
 
         .container {
             max-width: 600px; margin: 20px auto; padding: 20px;
             background: var(--glass); border-radius: 25px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            margin-bottom: 100px; /* Space for floating button */
         }
 
         .category-title {
             font-size: 1.1em; font-weight: 800; color: var(--dark-green);
             border-bottom: 2px solid var(--accent-green); margin: 25px 0 15px 0;
             padding-bottom: 5px; text-transform: uppercase;
-        }
-
-        .ghee-option {
-            background: #fff9e6; padding: 10px; border-radius: 10px;
-            margin-bottom: 15px; border: 1px solid #f1c40f; font-size: 0.85em;
-            display: flex; align-items: center; gap: 10px;
         }
 
         .food-item {
@@ -63,15 +72,23 @@
         }
         .veg-dot { width: 6px; height: 6px; background: var(--veg-green); border-radius: 50%; }
 
-        .food-name { font-weight: 600; font-size: 0.95em; }
-        .food-price { color: #666; font-size: 0.9em; display: block; }
-
         .qty-controls {
             display: flex; align-items: center; background: #fff;
             border: 1px solid #ddd; border-radius: 50px; padding: 2px 10px;
         }
 
         .qty-btn { background: none; border: none; color: var(--accent-green); font-size: 1.2em; cursor: pointer; padding: 0 8px; }
+
+        /* FLOATING SIDE BASKET BUTTON */
+        .floating-cart {
+            position: fixed; bottom: 30px; right: 20px;
+            background: var(--dark-green); color: white;
+            padding: 15px 25px; border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+            cursor: pointer; z-index: 2000; font-weight: 700;
+            display: flex; align-items: center; gap: 10px; border: none;
+        }
+
         .btn { background: var(--dark-green); color: white; border: none; padding: 15px; border-radius: 50px; cursor: pointer; font-weight: 600; width: 100%; margin-top: 15px; }
         .hidden { display: none; }
         input, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 12px; box-sizing: border-box; }
@@ -81,17 +98,31 @@
 <body>
 
 <header>
-    <div class="header-title" onclick="showPage('menu-page')">Tiffin Treats</div>
-    <div class="info-bar">
-        Timings: 9 AM - 8 PM | <span class="pay-notice">Pay in Advance Required</span>
+    <div class="header-content">
+        <button class="nav-btn" onclick="toggleAbout()">👤<br><small>ABOUT</small></button>
+        <div class="header-title" onclick="showPage('menu-page')">Tiffin Treats</div>
+        <button class="nav-btn" onclick="showPage('cart-page')">🛒<br><small>CART</small></button>
     </div>
 </header>
 
+<div class="info-bar">
+    9 AM - 8 PM | <span class="pay-notice">Pay in Advance Required</span>
+</div>
+
+<div id="about-dropdown">
+    <p style="font-size: 0.85em; max-width: 400px; margin: 0 auto; color: #555;">
+        "Tiffin Treats is a homemade food venture that brings the comfort of fresh, home-cooked meals straight to your plate. Every dish is prepared with care, quality ingredients, and love in every bite."
+    </p>
+</div>
+
+<button id="floatCart" class="floating-cart" onclick="showPage('cart-page')">
+    View Basket • ₹<span id="nav-total">0</span>
+</button>
+
 <div id="menu-page" class="container">
     <div class="category-title">Paratha Thali</div>
-    <div class="ghee-option">
-        <input type="checkbox" id="gheeCheck" onchange="updateGhee()">
-        <label for="gheeCheck">Make it Ghee Paratha Thali (+₹20 to each Thali)</label>
+    <div style="background: #fff9e6; padding: 8px; border-radius: 10px; margin-bottom: 10px; font-size: 0.8em; border: 1px solid #f1c40f;">
+        <input type="checkbox" id="gheeCheck" onchange="updateGhee()"> Add Ghee (+₹20 per Thali)
     </div>
     <div id="paratha-list"></div>
 
@@ -101,38 +132,35 @@
     <div class="category-title">Main Dishes</div>
     <div id="main-list"></div>
 
-    <div class="category-title">Pre-Order Menu (1 day before)</div>
+    <div class="category-title">Pre-Order Menu</div>
     <div id="preorder-list"></div>
 
     <div class="category-title">Beverages</div>
-    <div id="beverage-list"></div>
-    
-    <button class="btn" onclick="showPage('cart-page')">View Basket (₹<span id="nav-total">0</span>)</button>
+    <div id="beverages-list"></div>
 </div>
 
 <div id="cart-page" class="container hidden">
     <h2>Your Basket</h2>
     <div id="cart-items"></div>
-    <div style="border-top: 2px solid #eee; margin-top: 15px; padding-top: 15px;">
-        <h3 style="display:flex; justify-content:space-between;">Total: <span>₹<span id="total-price">0</span></span></h3>
-        <p style="font-size: 0.8em; color: #d35400;">* All orders must be paid in advance via QR/Razorpay.</p>
-    </div>
+    <h3 style="display:flex; justify-content:space-between; border-top: 1px solid #ddd; padding-top: 10px;">
+        Total: <span>₹<span id="total-price">0</span></span>
+    </h3>
     <button class="btn" onclick="showPage('checkout-page')">Proceed to Address</button>
-    <button class="btn" style="background:none; color:var(--dark-green);" onclick="showPage('menu-page')">Back to Menu</button>
+    <button class="btn" style="background:none; color:var(--dark-green);" onclick="showPage('menu-page')">← Back to Menu</button>
 </div>
 
 <div id="checkout-page" class="container hidden">
     <h2>Delivery Details</h2>
     <input type="text" id="userName" placeholder="Full Name">
     <textarea id="userAddress" placeholder="Full Address with Pincode"></textarea>
-    <button class="btn" onclick="processPayment()">Go to Payment</button>
+    <button class="btn" onclick="processPayment()">Confirm & Pay</button>
 </div>
 
 <div id="payment-page" class="container hidden" style="text-align: center;">
-    <h2>Advance Payment</h2>
-    <p>Please pay <strong>₹<span id="pay-amount">0</span></strong> to confirm order</p>
-    <img id="qr-code" src="" style="background:white; padding:15px; border-radius:15px; margin: 15px 0;" alt="Payment QR">
-    <button class="btn" id="razorpay-button">Pay via Razorpay</button>
+    <h2>Payment</h2>
+    <p>Amount to Pay: <strong>₹<span id="pay-amount">0</span></strong></p>
+    <img id="qr-code" src="" style="background:white; padding:15px; border-radius:15px; margin: 15px 0;" alt="QR">
+    <button class="btn" id="razorpay-button">Secure Pay via Razorpay</button>
 </div>
 
 <script>
@@ -190,14 +218,15 @@
                     </div>
                 </div>`;
             });
-            document.getElementById(cat + '-list').innerHTML = html;
+            // Fixed the list ID reference for beverages
+            const containerId = (cat === 'beverages') ? 'beverages-list' : cat + '-list';
+            document.getElementById(containerId).innerHTML = html;
         }
     }
 
-    function updateGhee() {
-        gheeSelected = document.getElementById('gheeCheck').checked;
-        calculateTotal();
-    }
+    function toggleAbout() { document.getElementById('about-dropdown').classList.toggle('open'); }
+
+    function updateGhee() { gheeSelected = document.getElementById('gheeCheck').checked; calculateTotal(); }
 
     function updateQty(name, price, change) {
         if (!cart[name]) cart[name] = { price, qty: 0 };
@@ -213,10 +242,7 @@
         let total = 0;
         for(let key in cart) {
             let itemTotal = cart[key].price * cart[key].qty;
-            // Add Ghee charge if it's a Paratha Thali
-            if (gheeSelected && key.includes("Thali") && key.includes("Paratha")) {
-                itemTotal += (20 * cart[key].qty);
-            }
+            if (gheeSelected && key.includes("Thali") && key.includes("Paratha")) itemTotal += (20 * cart[key].qty);
             total += itemTotal;
         }
         document.getElementById('nav-total').innerText = total;
@@ -227,6 +253,7 @@
     function showPage(pageId) {
         document.querySelectorAll('.container').forEach(p => p.classList.add('hidden'));
         document.getElementById(pageId).classList.remove('hidden');
+        document.getElementById('floatCart').style.display = (pageId === 'menu-page') ? 'flex' : 'none';
         if(pageId === 'cart-page') {
             let html = '';
             for(let key in cart) if(cart[key].qty > 0) {
@@ -248,10 +275,6 @@
         document.getElementById('qr-code').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=YOUR_ID@upi&am=${total}`;
         showPage('payment-page');
     }
-
-    document.getElementById('razorpay-button').onclick = function() {
-        alert("Redirecting to Razorpay secure gateway...");
-    };
 
     renderMenu();
 </script>
