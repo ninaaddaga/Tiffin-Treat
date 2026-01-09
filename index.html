@@ -49,7 +49,6 @@
             margin-bottom: 150px;
         }
 
-        /* ABOUT SECTION STYLES - FIXED FOR CIRCLE */
         #about-section {
             text-align: center;
             padding: 20px 0;
@@ -58,11 +57,11 @@
         }
 
         .about-img {
-            width: 200px; /* Increased size slightly for better visibility */
+            width: 200px;
             height: 200px;
-            border-radius: 50%; /* This makes it a circle */
-            object-fit: cover; /* This prevents the image from stretching */
-            border: 4px solid var(--gold); /* Your gold outline */
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--gold);
             margin-bottom: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             display: block;
@@ -84,10 +83,22 @@
             margin: 30px 0 15px; padding-bottom: 5px;
         }
 
+        .category-subtitle {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 15px;
+            display: block;
+        }
+
         .food-item {
             display: flex; justify-content: space-between; align-items: center;
             padding: 12px 0; border-bottom: 1px solid #eee;
         }
+
+        .item-details { flex: 1; padding-right: 10px; }
+        .item-name { font-weight: 600; display: block; }
+        .item-desc { font-size: 0.8em; color: #777; line-height: 1.2; }
+        .item-price { font-size: 0.9em; color: var(--accent-green); font-weight: 600; }
 
         .qty-controls {
             display: flex; align-items: center; gap: 10px;
@@ -139,17 +150,18 @@
         </div>
     </div>
 
-    <div class="category-title">Paratha Thalis (2 pcs)</div>
+    <div class="category-title">Paratha Thali</div>
+    <span class="category-subtitle">(Served with Curd, Pickle & Chutney. ₹20 extra for Ghee Paratha Thali)</span>
     <div id="paratha-list"></div>
 
-    <div class="category-title">Main Course</div>
+    <div class="category-title">Other Items</div>
+    <div id="other-list"></div>
+
+    <div class="category-title">Main Dishes</div>
     <div id="main-list"></div>
 
-    <div class="category-title">Combos & Thalis</div>
-    <div id="thali-list"></div>
-
-    <div class="category-title">Sides & Breads</div>
-    <div id="sides-list"></div>
+    <div class="category-title">Pre-Order Menu (1 day before)</div>
+    <div id="preorder-list"></div>
 
     <div class="category-title">Beverages</div>
     <div id="beverage-list"></div>
@@ -192,27 +204,34 @@
 <script>
     const fullMenu = {
         paratha: [
-            {n: "Pizza Paratha Thali", p: 199}, {n: "Aloo Paratha Thali", p: 150},
-            {n: "Aloo Pyaaz Paratha Thali", p: 150}, {n: "Paneer Paratha Thali", p: 180},
-            {n: "Gobhi Paratha Thali", p: 150}, {n: "Muli Paratha Thali", p: 150},
-            {n: "Methi Paratha Thali", p: 150}, {n: "Mix Paratha Thali", p: 150},
-            {n: "Sattu Paratha Thali", p: 150}
+            {n: "Pizza Paratha Thali (2 pcs)", p: 199}, {n: "Aloo Paratha Thali (2 pcs)", p: 150},
+            {n: "Aloo Pyaaz Paratha Thali (2 pcs)", p: 150}, {n: "Paneer Paratha Thali (2 pcs)", p: 180},
+            {n: "Gobhi Paratha Thali (2 pcs)", p: 150}, {n: "Muli Paratha Thali (2 pcs)", p: 150},
+            {n: "Methi Paratha Thali (2 pcs)", p: 150}, {n: "Mix Paratha Thali (2 pcs)", p: 150},
+            {n: "Sattu Paratha Thali (2 pcs)", p: 150}
+        ],
+        other: [
+            {n: "Plain Paratha", p: 35, d: "per piece"},
+            {n: "Ghee Tawa Roti", p: 25, d: "per piece"},
+            {n: "Puri (4 pcs) with Aloo Sabji", p: 150},
+            {n: "Mini meal", p: 160, d: "Dal, any one Sabji, 4Pcs. Of Roti"},
+            {n: "Deluxe thali", p: 199, d: "Dal + Seasonal Sabji + Steamed Rice + 3 Ghee Tawa Roti + Salad + Raita"},
+            {n: "Supreme thali", p: 249, d: "Paneer/Special curry, Seasonal Sabji, Jeera rice, (2pcs. plain paratha or 3 Puri ), Raita, Salad"}
         ],
         main: [
-            {n: "Dal Fry (Full)", p: 320}, {n: "Dal Fry (Half)", p: 160},
-            {n: "Paneer Butter Masala (Full)", p: 399}, {n: "Paneer Butter Masala (Half)", p: 200},
-            {n: "Kadai Paneer (Full)", p: 399}, {n: "Palak Paneer (Full)", p: 399},
-            {n: "Dum Aloo (Full)", p: 340}, {n: "Kadhi Pakoda (Full)", p: 320},
-            {n: "Punjabi Chhole (Full)", p: 350}, {n: "Rajma (Full)", p: 350}
+            {n: "Dal Fry (half)", p: 160}, {n: "Dal Fry (full)", p: 320},
+            {n: "Paneer Butter Masala (half)", p: 200}, {n: "Paneer Butter Masala (full)", p: 399},
+            {n: "Kadai Paneer (half)", p: 200}, {n: "Kadai Paneer (full)", p: 399},
+            {n: "Palak Paneer (half)", p: 200}, {n: "Palak Paneer (full)", p: 399},
+            {n: "Dum Aloo (half)", p: 170}, {n: "Dum Aloo (full)", p: 340},
+            {n: "Kadhi Pakoda (half)", p: 160}, {n: "Kadhi Pakoda (full)", p: 320}
         ],
-        thali: [
-            {n: "Mini Meal (Dal, Sabji, 4 Roti)", p: 160}, {n: "Deluxe Thali", p: 199},
-            {n: "Supreme Thali", p: 249}, {n: "Chhole Bhature (2 pcs)", p: 200},
-            {n: "Pav Bhaji (3 pcs)", p: 200}
-        ],
-        sides: [
-            {n: "Plain Paratha (1 pc)", p: 35}, {n: "Ghee Tawa Roti (1 pc)", p: 25},
-            {n: "Puri (4 pcs) with Aloo Sabji", p: 150}, {n: "Plain Rice", p: 100}, {n: "Jeera Rice", p: 130}
+        preorder: [
+            {n: "Punjabi Chhole (half)", p: 175}, {n: "Punjabi Chhole (full)", p: 350},
+            {n: "Rajma (half)", p: 175}, {n: "Rajma (full)", p: 350},
+            {n: "Chhole Bhature (2 pcs)", p: 200},
+            {n: "Dal Makhni (half)", p: 190}, {n: "Dal Makhni (full)", p: 380},
+            {n: "Pav Bhaji( 3pcs.)", p: 200}
         ],
         beverage: [
             {n: "Butter Milk", p: 50}, {n: "Sweet Lassi", p: 70},
@@ -229,7 +248,11 @@
             let html = '';
             fullMenu[cat].forEach(item => {
                 html += `<div class="food-item">
-                    <div><b>${item.n}</b><br><small>₹${item.p}</small></div>
+                    <div class="item-details">
+                        <span class="item-name">${item.n}</span>
+                        ${item.d ? `<span class="item-desc">${item.d}</span>` : ''}
+                        <span class="item-price">₹${item.p}</span>
+                    </div>
                     <div class="qty-controls">
                         <button class="qty-btn" onclick="updateQty('${item.n}', ${item.p}, -1)">−</button>
                         <span id="qty-${item.n}" style="font-weight:600">0</span>
