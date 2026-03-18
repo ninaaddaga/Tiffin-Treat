@@ -314,7 +314,7 @@
         for(let key in cart) if(cart[key].qty > 0) orderSummary += `${key} (x${cart[key].qty}), `;
 
         // GOOGLE SHEETS INTEGRATION
-        const scriptURL = 'https://docs.google.com/spreadsheets/d/1LyHVNYSY1PCajocq-l3HDqAAiz6yCv0KvRCpb0LXr5U/edit?gid=0#gid=0'; 
+        const scriptURL = 'https://docs.google.com/spreadsheets/d/1Fsn6QCSP85CXJqulVByqyT7dleX4Sz_Lop0_tvYGS9c/edit?gid=0#gid=0'; 
         fetch(scriptURL, {
             method: 'POST',
             mode: 'no-cors',
