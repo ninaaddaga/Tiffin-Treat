@@ -57,25 +57,14 @@
         }
 
         .about-img {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            object-fit: cover;
+            width: 200px; height: 200px;
+            border-radius: 50%; object-fit: cover;
             border: 4px solid var(--gold);
-            margin-bottom: 15px;
+            margin: 0 auto 15px; display: block;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
         }
 
-        .about-text {
-            font-style: italic;
-            line-height: 1.7;
-            color: #444;
-            font-size: 1em;
-            padding: 0 15px;
-        }
+        .about-text { font-style: italic; line-height: 1.7; color: #444; font-size: 1em; padding: 0 15px; }
 
         .category-title {
             font-family: 'Playfair Display', serif; font-size: 1.4em;
@@ -83,12 +72,7 @@
             margin: 30px 0 15px; padding-bottom: 5px;
         }
 
-        .category-subtitle {
-            font-size: 0.85em;
-            color: #666;
-            margin-bottom: 15px;
-            display: block;
-        }
+        .category-subtitle { font-size: 0.85em; color: #666; margin-bottom: 15px; display: block; }
 
         .food-item {
             display: flex; justify-content: space-between; align-items: center;
@@ -108,6 +92,15 @@
 
         .qty-btn { background: none; border: none; color: var(--accent-green); font-size: 1.2em; cursor: pointer; font-weight: bold; }
 
+        /* PAYMENT PAGE STYLING */
+        .qr-container {
+            background: white; padding: 20px; border-radius: 15px;
+            border: 2px solid var(--gold); display: inline-block;
+            margin: 20px 0; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        #qr-code { width: 220px; height: 220px; display: block; margin-bottom: 10px; }
+
         .floating-basket-bar {
             position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%);
             width: 90%; max-width: 500px; background: var(--accent-green);
@@ -116,15 +109,8 @@
             box-shadow: 0 8px 30px rgba(0,0,0,0.5); z-index: 999; cursor: pointer;
         }
 
-        .whatsapp-float {
-            position: fixed; bottom: 20px; right: 20px;
-            background: #25d366; color: white; width: 60px; height: 60px;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 1000; text-decoration: none;
-        }
-
         .hidden { display: none !important; }
-        .btn-main { background: var(--accent-green); color: white; border: none; padding: 16px; border-radius: 12px; cursor: pointer; width: 100%; font-weight: 600; text-transform: uppercase; margin-top: 15px; }
+        .btn-main { background: var(--accent-green); color: white; border: none; padding: 16px; border-radius: 12px; cursor: pointer; width: 100%; font-weight: 600; text-transform: uppercase; margin-top: 15px; letter-spacing: 1px; }
         input, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; font-family: inherit; }
     </style>
 </head>
@@ -132,9 +118,9 @@
 
 <header>
     <div class="header-content">
-        <button onclick="toggleAbout()" style="background:none; border:none; font-weight:600; cursor:pointer;">STORY</button>
+        <button onclick="toggleAbout()" style="background:none; border:none; font-weight:600; cursor:pointer; color: var(--accent-green);">STORY</button>
         <h1 class="brand-title" onclick="showPage('menu-page')">tiffin treats</h1>
-        <button onclick="showPage('cart-page')" style="background:none; border:none; font-weight:600; cursor:pointer;">CART</button>
+        <button onclick="showPage('cart-page')" style="background:none; border:none; font-weight:600; cursor:pointer; color: var(--accent-green);">CART</button>
     </div>
 </header>
 
@@ -142,16 +128,12 @@
     <div id="about-section" class="hidden">
         <img src="https://raw.githubusercontent.com/ninaaddaga/Tiffin-Treat/main/1656742818972%20(1).jpeg" class="about-img">
         <div class="about-text">
-            Tiffin Treats started with a simple idea — to share fresh, home-cooked food with people who miss the comfort of meals made at home. We are a small kitchen that focuses on quality, hygiene, and care in every tiffin we prepare.
-            <br><br>
-            Each meal is cooked fresh using simple, wholesome ingredients and packed with attention and warmth. We believe that good food doesn’t need to be fancy — it just needs to be made with love and sincerity.
-            <br><br>
-            At Tiffin Treats, our aim is to provide comforting, homemade meals that make you feel cared for, one tiffin at a time.
+            Tiffin Treats started with a simple idea — to share fresh, home-cooked food with people who miss the comfort of meals made at home.
         </div>
     </div>
 
     <div class="category-title">Paratha Thali</div>
-    <span class="category-subtitle">(Served with Curd, Pickle & Chutney. ₹20 extra for Ghee Paratha Thali)</span>
+    <span class="category-subtitle">(Served with Curd, Pickle & Chutney)</span>
     <div id="paratha-list"></div>
 
     <div class="category-title">Other Items</div>
@@ -168,38 +150,37 @@
 </div>
 
 <div id="cart-page" class="container hidden">
-    <h2 style="font-family: 'Playfair Display'; text-align: center;">Your Order</h2>
+    <h2 style="font-family: 'Playfair Display'; text-align: center; color: var(--accent-green);">Your Order</h2>
     <div id="cart-items-details"></div>
-    <h3 style="display:flex; justify-content:space-between; margin-top: 20px; border-top: 2px solid #4A5D23; padding-top: 10px;">
-        Total <span>₹<span id="final-total">0</span></span>
+    <h3 style="display:flex; justify-content:space-between; margin-top: 20px; border-top: 2px solid var(--accent-green); padding-top: 15px;">
+        Total Amount <span>₹<span id="final-total">0</span></span>
     </h3>
-    <button class="btn-main" onclick="showPage('checkout-page')">Enter Delivery Details</button>
+    <button class="btn-main" id="checkout-btn" onclick="showPage('checkout-page')">Proceed to Checkout</button>
 </div>
 
 <div id="checkout-page" class="container hidden">
-    <h2 style="font-family: 'Playfair Display'; text-align: center;">Delivery</h2>
-    <input type="text" id="custName" placeholder="Full Name">
-    <textarea id="custAddr" placeholder="Complete Address (Society, Flat No, Landmark)" rows="3"></textarea>
-    <button class="btn-main" onclick="finalizeOrder()">Check ETA & Pay</button>
+    <h2 style="font-family: 'Playfair Display'; text-align: center; color: var(--accent-green);">Delivery Details</h2>
+    <input type="text" id="custName" placeholder="Your Full Name">
+    <textarea id="custAddr" placeholder="Complete Delivery Address" rows="4"></textarea>
+    <button class="btn-main" onclick="finalizeOrder()">Place Order</button>
 </div>
 
 <div id="payment-page" class="container hidden" style="text-align: center;">
-    <h2 style="font-family: 'Playfair Display';">Payment</h2>
-    <img id="qr-code" src="" style="width:180px; margin:20px 0; border: 1px solid #eee; padding: 10px; background: #fff;">
-    <button class="btn-main" id="rzp-button">Pay with Razorpay</button>
+    <h2 style="font-family: 'Playfair Display'; color: var(--accent-green);">Complete Your Payment</h2>
+    <div class="qr-container">
+        <img id="qr-code" src="" alt="Payment QR Code">
+        <div style="font-weight: 700; color: var(--accent-green); letter-spacing: 1px;">SCAN TO PAY</div>
+    </div>
+    <p style="font-size: 0.85em; color: #666; font-style: italic;">Scan using any UPI app to complete order</p>
 </div>
 
 <div id="floating-bar" class="floating-basket-bar hidden" onclick="showPage('cart-page')">
     <div>
         <span id="items-count-float" style="background:white; color:var(--accent-green); padding:2px 8px; border-radius:10px; font-weight:700; margin-right:10px;">0</span>
-        <span style="font-weight:600; letter-spacing:1px;">VIEW CART</span>
+        <span style="font-weight:600; letter-spacing:1px;">VIEW BASKET</span>
     </div>
     <span style="font-weight:700;">₹<span id="total-float">0</span></span>
 </div>
-
-<a href="https://wa.me/YOUR_PHONE_NUMBER" class="whatsapp-float" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="35" alt="WhatsApp">
-</a>
 
 <script>
     const fullMenu = {
@@ -211,12 +192,9 @@
             {n: "Sattu Paratha Thali (2 pcs)", p: 150}
         ],
         other: [
-            {n: "Plain Paratha", p: 35, d: "per piece"},
-            {n: "Ghee Tawa Roti", p: 25, d: "per piece"},
-            {n: "Puri (4 pcs) with Aloo Sabji", p: 150},
-            {n: "Mini meal", p: 160, d: "Dal, any one Sabji, 4Pcs. Of Roti"},
-            {n: "Deluxe thali", p: 199, d: "Dal + Seasonal Sabji + Steamed Rice + 3 Ghee Tawa Roti + Salad + Raita"},
-            {n: "Supreme thali", p: 249, d: "Paneer/Special curry, Seasonal Sabji, Jeera rice, (2pcs. plain paratha or 3 Puri ), Raita, Salad"}
+            {n: "Plain Paratha", p: 35, d: "per piece"}, {n: "Ghee Tawa Roti", p: 25, d: "per piece"},
+            {n: "Puri (4 pcs) with Aloo Sabji", p: 150}, {n: "Mini meal", p: 160, d: "Dal, Sabji, 4 Roti"},
+            {n: "Deluxe thali", p: 199}, {n: "Supreme thali", p: 249}
         ],
         main: [
             {n: "Dal Fry (half)", p: 160}, {n: "Dal Fry (full)", p: 320},
@@ -229,9 +207,8 @@
         preorder: [
             {n: "Punjabi Chhole (half)", p: 175}, {n: "Punjabi Chhole (full)", p: 350},
             {n: "Rajma (half)", p: 175}, {n: "Rajma (full)", p: 350},
-            {n: "Chhole Bhature (2 pcs)", p: 200},
-            {n: "Dal Makhni (half)", p: 190}, {n: "Dal Makhni (full)", p: 380},
-            {n: "Pav Bhaji( 3pcs.)", p: 200}
+            {n: "Chhole Bhature (2 pcs)", p: 200}, {n: "Dal Makhni (half)", p: 190},
+            {n: "Dal Makhni (full)", p: 380}, {n: "Pav Bhaji( 3pcs.)", p: 200}
         ],
         beverage: [
             {n: "Butter Milk", p: 50}, {n: "Sweet Lassi", p: 70},
@@ -250,12 +227,11 @@
                 html += `<div class="food-item">
                     <div class="item-details">
                         <span class="item-name">${item.n}</span>
-                        ${item.d ? `<span class="item-desc">${item.d}</span>` : ''}
                         <span class="item-price">₹${item.p}</span>
                     </div>
                     <div class="qty-controls">
                         <button class="qty-btn" onclick="updateQty('${item.n}', ${item.p}, -1)">−</button>
-                        <span id="qty-${item.n}" style="font-weight:600">0</span>
+                        <span id="qty-${item.n.replace(/\s/g, '')}" style="font-weight:600">0</span>
                         <button class="qty-btn" onclick="updateQty('${item.n}', ${item.p}, 1)">+</button>
                     </div>
                 </div>`;
@@ -268,7 +244,15 @@
         if (!cart[name]) cart[name] = { price, qty: 0 };
         if (cart[name].qty + change >= 0) {
             cart[name].qty += change;
-            document.getElementById('qty-'+name).innerText = cart[name].qty;
+            
+            // Update Menu quantity
+            const menuQtySpan = document.getElementById('qty-' + name.replace(/\s/g, ''));
+            if (menuQtySpan) menuQtySpan.innerText = cart[name].qty;
+            
+            // If on cart page, refresh it
+            if (!document.getElementById('cart-page').classList.contains('hidden')) {
+                renderCart();
+            }
             updateTotals();
         }
     }
@@ -279,33 +263,49 @@
         document.getElementById('final-total').innerText = total;
         document.getElementById('total-float').innerText = total;
         document.getElementById('items-count-float').innerText = count;
-        
         const isMenu = !document.getElementById('menu-page').classList.contains('hidden');
         document.getElementById('floating-bar').classList.toggle('hidden', count === 0 || !isMenu);
+        
+        // Hide/Show Checkout Button based on cart status
+        if(document.getElementById('checkout-btn')) {
+            document.getElementById('checkout-btn').classList.toggle('hidden', count === 0);
+        }
+    }
+
+    function renderCart() {
+        let html = '';
+        let hasItems = false;
+        for(let key in cart) if(cart[key].qty > 0) {
+            hasItems = true;
+            html += `<div class="food-item">
+                <div class="item-details">
+                    <span class="item-name">${key}</span>
+                    <span class="item-price">₹${cart[key].price * cart[key].qty}</span>
+                </div>
+                <div class="qty-controls">
+                    <button class="qty-btn" onclick="updateQty('${key}', ${cart[key].price}, -1)">−</button>
+                    <span style="font-weight:600">${cart[key].qty}</span>
+                    <button class="qty-btn" onclick="updateQty('${key}', ${cart[key].price}, 1)">+</button>
+                </div>
+            </div>`;
+        }
+        document.getElementById('cart-items-details').innerHTML = html || '<p style="text-align:center; padding: 20px;">Your cart is currently empty.</p>';
     }
 
     function showPage(pageId) {
         document.querySelectorAll('.container').forEach(p => p.classList.add('hidden'));
         document.getElementById(pageId).classList.remove('hidden');
-        
-        if(pageId === 'cart-page') {
-            let html = '';
-            for(let key in cart) if(cart[key].qty > 0) {
-                html += `<div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #eee;">
-                    <span>${key} (x${cart[key].qty})</span><span>₹${cart[key].price * cart[key].qty}</span>
-                </div>`;
-            }
-            document.getElementById('cart-items-details').innerHTML = html || '<p style="text-align:center">Empty</p>';
-        }
+        if(pageId === 'cart-page') renderCart();
         updateTotals();
         window.scrollTo(0,0);
     }
 
     function finalizeOrder() {
         const addr = document.getElementById('custAddr').value;
-        if(!addr) return alert("Please enter your address.");
+        const name = document.getElementById('custName').value;
+        if(!addr || !name) return alert("Please fill in your name and delivery address.");
         const amt = document.getElementById('final-total').innerText;
-        document.getElementById('qr-code').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=YOUR_ID@upi&am=${amt}`;
+        document.getElementById('qr-code').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=YOUR_UPI_ID@okicici&pn=TiffinTreats&am=${amt}&cu=INR`;
         showPage('payment-page');
     }
 
