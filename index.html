@@ -306,31 +306,29 @@
 
 
 function finalizeOrder() {
-    const addr = document.getElementById('custAddr').value;
     const name = document.getElementById('custName').value;
-    const amt = document.getElementById('final-total').innerText;
+    const addr = document.getElementById('custAddr').value;
+    const total = document.getElementById('final-total').innerText;
+
+    if(!name || !addr) return alert("Please enter your name and address!");
+
+    // 1. Create the WhatsApp Message
+    let orderSummary = `*New Order from Tiffin Treats*%0A`;
+    orderSummary += `*Name:* ${name}%0A`;
+    orderSummary += `*Address:* ${addr}%0A`;
+    orderSummary += `*Items:* `;
    
-    if(!addr || !name) return alert("Please enter your name and address!");
+    for(let key in cart) {
+        if(cart[key].qty > 0) orderSummary += `${key} (x${cart[key].qty}), `;
+    }
+    orderSummary += `%0A*Total:* ₹${total}`;
 
-    let summary = "";
-    for(let key in cart) if(cart[key].qty > 0) summary += `${key} (x${cart[key].qty}), `;
-S
-    // PASTE YOUR NEW URL HERE
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbywY6XgUzKw3XqqoRBFOasTmIvyCjg53u7EKpmzi1H5E1CI7aeGpWnIrQ4MUvvVtwXaWw/exec';
-   
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('address', addr);
-    formData.append('order', summary);
-    formData.append('total', amt);
+    // 2. Open WhatsApp (Replace with your actual number)
+    const whatsappNumber = "919876543210"; // <--- Put your number here!
+    window.open(`https://wa.me/${whatsappNumber}?text=${orderSummary}`, '_blank');
 
-    // This sends the data to your sheet
-    fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
-      .then(() => console.log("Order Sent!"))
-      .catch(err => console.error(err));
-
-    // This shows the payment page
-    document.getElementById('qr-code').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=YOUR_UPI_ID@okicici&pn=TiffinTreats&am=${amt}&cu=INR`;
+    // 3. Show the Payment QR
+    document.getElementById('qr-code').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=YOUR_UPI_ID@okicici&am=${total}`;
     showPage('payment-page');
 }
 
