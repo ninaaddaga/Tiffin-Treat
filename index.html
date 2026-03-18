@@ -304,26 +304,35 @@
         window.scrollTo(0,0);
     }
 
-    function finalizeOrder() {
-        const addr = document.getElementById('custAddr').value;
-        const name = document.getElementById('custName').value;
-        const amt = document.getElementById('final-total').innerText;
-        if(!addr || !name) return alert("Please fill in your details.");
 
-        let orderSummary = "";
-        for(let key in cart) if(cart[key].qty > 0) orderSummary += `${key} (x${cart[key].qty}), `;
+function finalizeOrder() {
+    const addr = document.getElementById('custAddr').value;
+    const name = document.getElementById('custName').value;
+    const amt = document.getElementById('final-total').innerText;
+   
+    if(!addr || !name) return alert("Please enter your name and address!");
 
-        // GOOGLE SHEETS INTEGRATION
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxzLFLiJ9sy7MOuPJHNZc0WVFTa3qfgKM9ipnTC_mbu2fEwZRWmJ3BYJkUpvxZJPik1cw/exec'; 
-        fetch(scriptURL, {
-            method: 'POST',
-            mode: 'no-cors',
-            body: JSON.stringify({name: name, address: addr, order: orderSummary, total: amt})
-        }).catch(e => console.log(e));
+    let summary = "";
+    for(let key in cart) if(cart[key].qty > 0) summary += `${key} (x${cart[key].qty}), `;
 
-        document.getElementById('qr-code').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=YOUR_UPI_ID@okicici&pn=TiffinTreats&am=${amt}&cu=INR`;
-        showPage('payment-page');
-    }
+    // PASTE YOUR NEW URL HERE
+    const scriptURL = 'https://script.google.com/macros/s/XXXXX/exec';
+   
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('address', addr);
+    formData.append('order', summary);
+    formData.append('total', amt);
+
+    // This sends the data to your sheet
+    fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
+      .then(() => console.log("Order Sent!"))
+      .catch(err => console.error(err));
+
+    // This shows the payment page
+    document.getElementById('qr-code').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=YOUR_UPI_ID@okicici&pn=TiffinTreats&am=${amt}&cu=INR`;
+    showPage('payment-page');
+}
 
     renderMenu();
 </script>
