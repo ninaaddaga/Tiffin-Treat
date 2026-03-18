@@ -49,6 +49,7 @@
             margin-bottom: 150px;
         }
 
+        /* STORY SECTION */
         #about-section {
             text-align: center;
             padding: 20px 0;
@@ -66,13 +67,14 @@
 
         .about-text { font-style: italic; line-height: 1.7; color: #444; font-size: 1em; padding: 0 15px; }
 
+        /* MENU STYLING */
         .category-title {
             font-family: 'Playfair Display', serif; font-size: 1.4em;
             color: var(--accent-green); border-bottom: 2px solid var(--gold);
-            margin: 30px 0 15px; padding-bottom: 5px;
+            margin: 30px 0 10px; padding-bottom: 5px;
         }
 
-        .category-subtitle { font-size: 0.85em; color: #666; margin-bottom: 15px; display: block; }
+        .category-subtitle { font-size: 0.85em; color: #666; margin-bottom: 15px; display: block; font-style: italic; }
 
         .food-item {
             display: flex; justify-content: space-between; align-items: center;
@@ -80,27 +82,29 @@
         }
 
         .item-details { flex: 1; padding-right: 10px; }
-        .item-name { font-weight: 600; display: block; }
-        .item-desc { font-size: 0.8em; color: #777; line-height: 1.2; }
-        .item-price { font-size: 0.9em; color: var(--accent-green); font-weight: 600; }
+        .item-name { font-weight: 600; display: block; color: #222; }
+        .item-desc { font-size: 0.75em; color: #777; display: block; margin-top: 2px; }
+        .item-price { font-size: 0.9em; color: var(--accent-green); font-weight: 600; margin-top: 4px; display: inline-block;}
 
         .qty-controls {
-            display: flex; align-items: center; gap: 10px;
+            display: flex; align-items: center; gap: 12px;
             background: #fff; border: 1px solid #ddd;
-            padding: 4px 12px; border-radius: 50px;
+            padding: 5px 15px; border-radius: 50px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
-        .qty-btn { background: none; border: none; color: var(--accent-green); font-size: 1.2em; cursor: pointer; font-weight: bold; }
+        .qty-btn { background: none; border: none; color: var(--accent-green); font-size: 1.3em; cursor: pointer; font-weight: bold; padding: 0 5px; }
 
-        /* PAYMENT PAGE STYLING */
+        /* PAYMENT & QR */
         .qr-container {
-            background: white; padding: 20px; border-radius: 15px;
+            background: white; padding: 25px; border-radius: 15px;
             border: 2px solid var(--gold); display: inline-block;
             margin: 20px 0; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
 
-        #qr-code { width: 220px; height: 220px; display: block; margin-bottom: 10px; }
+        #qr-code { width: 220px; height: 220px; display: block; margin-bottom: 15px; }
 
+        /* UI ELEMENTS */
         .floating-basket-bar {
             position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%);
             width: 90%; max-width: 500px; background: var(--accent-green);
@@ -109,9 +113,16 @@
             box-shadow: 0 8px 30px rgba(0,0,0,0.5); z-index: 999; cursor: pointer;
         }
 
+        .whatsapp-float {
+            position: fixed; bottom: 20px; right: 20px;
+            background: #25d366; color: white; width: 60px; height: 60px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 1000; text-decoration: none;
+        }
+
         .hidden { display: none !important; }
         .btn-main { background: var(--accent-green); color: white; border: none; padding: 16px; border-radius: 12px; cursor: pointer; width: 100%; font-weight: 600; text-transform: uppercase; margin-top: 15px; letter-spacing: 1px; }
-        input, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; font-family: inherit; }
+        input, textarea { width: 100%; padding: 14px; margin: 10px 0; border-radius: 10px; border: 1px solid #ccc; box-sizing: border-box; font-family: inherit; font-size: 1em; }
     </style>
 </head>
 <body>
@@ -128,12 +139,12 @@
     <div id="about-section" class="hidden">
         <img src="https://raw.githubusercontent.com/ninaaddaga/Tiffin-Treat/main/1656742818972%20(1).jpeg" class="about-img">
         <div class="about-text">
-            Tiffin Treats started with a simple idea — to share fresh, home-cooked food with people who miss the comfort of meals made at home.
+            Tiffin Treats started with a simple idea — to share fresh, home-cooked food with people who miss the comfort of meals made at home. We focus on quality and care in every tiffin.
         </div>
     </div>
 
     <div class="category-title">Paratha Thali</div>
-    <span class="category-subtitle">(Served with Curd, Pickle & Chutney)</span>
+    <span class="category-subtitle">(Served with Curd, Pickle & Chutney. ₹20 extra for Ghee Paratha)</span>
     <div id="paratha-list"></div>
 
     <div class="category-title">Other Items</div>
@@ -161,17 +172,17 @@
 <div id="checkout-page" class="container hidden">
     <h2 style="font-family: 'Playfair Display'; text-align: center; color: var(--accent-green);">Delivery Details</h2>
     <input type="text" id="custName" placeholder="Your Full Name">
-    <textarea id="custAddr" placeholder="Complete Delivery Address" rows="4"></textarea>
+    <textarea id="custAddr" placeholder="Complete Delivery Address (Flat No, Building, Landmark)" rows="4"></textarea>
     <button class="btn-main" onclick="finalizeOrder()">Place Order</button>
 </div>
 
 <div id="payment-page" class="container hidden" style="text-align: center;">
-    <h2 style="font-family: 'Playfair Display'; color: var(--accent-green);">Complete Your Payment</h2>
+    <h2 style="font-family: 'Playfair Display'; color: var(--accent-green);">Complete Payment</h2>
     <div class="qr-container">
         <img id="qr-code" src="" alt="Payment QR Code">
         <div style="font-weight: 700; color: var(--accent-green); letter-spacing: 1px;">SCAN TO PAY</div>
     </div>
-    <p style="font-size: 0.85em; color: #666; font-style: italic;">Scan using any UPI app to complete order</p>
+    <p style="font-size: 0.85em; color: #666; font-style: italic;">Scan using any UPI app to complete your order</p>
 </div>
 
 <div id="floating-bar" class="floating-basket-bar hidden" onclick="showPage('cart-page')">
@@ -181,6 +192,10 @@
     </div>
     <span style="font-weight:700;">₹<span id="total-float">0</span></span>
 </div>
+
+<a href="https://wa.me/YOUR_PHONE_NUMBER" class="whatsapp-float" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="35" alt="WhatsApp">
+</a>
 
 <script>
     const fullMenu = {
@@ -194,7 +209,8 @@
         other: [
             {n: "Plain Paratha", p: 35, d: "per piece"}, {n: "Ghee Tawa Roti", p: 25, d: "per piece"},
             {n: "Puri (4 pcs) with Aloo Sabji", p: 150}, {n: "Mini meal", p: 160, d: "Dal, Sabji, 4 Roti"},
-            {n: "Deluxe thali", p: 199}, {n: "Supreme thali", p: 249}
+            {n: "Deluxe thali", p: 199, d: "Dal, Sabji, Rice, 3 Roti, Salad, Raita"}, 
+            {n: "Supreme thali", p: 249, d: "Special Curry, Sabji, Rice, 2 Paratha/3 Puri, Raita"}
         ],
         main: [
             {n: "Dal Fry (half)", p: 160}, {n: "Dal Fry (full)", p: 320},
@@ -208,7 +224,7 @@
             {n: "Punjabi Chhole (half)", p: 175}, {n: "Punjabi Chhole (full)", p: 350},
             {n: "Rajma (half)", p: 175}, {n: "Rajma (full)", p: 350},
             {n: "Chhole Bhature (2 pcs)", p: 200}, {n: "Dal Makhni (half)", p: 190},
-            {n: "Dal Makhni (full)", p: 380}, {n: "Pav Bhaji( 3pcs.)", p: 200}
+            {n: "Dal Makhni (full)", p: 380}, {n: "Pav Bhaji (3 pcs)", p: 200}
         ],
         beverage: [
             {n: "Butter Milk", p: 50}, {n: "Sweet Lassi", p: 70},
@@ -224,14 +240,16 @@
         for (let cat in fullMenu) {
             let html = '';
             fullMenu[cat].forEach(item => {
+                let safeName = item.n.replace(/[^a-zA-Z0-9]/g, '');
                 html += `<div class="food-item">
                     <div class="item-details">
                         <span class="item-name">${item.n}</span>
+                        ${item.d ? `<span class="item-desc">${item.d}</span>` : ''}
                         <span class="item-price">₹${item.p}</span>
                     </div>
                     <div class="qty-controls">
                         <button class="qty-btn" onclick="updateQty('${item.n}', ${item.p}, -1)">−</button>
-                        <span id="qty-${item.n.replace(/\s/g, '')}" style="font-weight:600">0</span>
+                        <span id="qty-${safeName}" style="font-weight:600">0</span>
                         <button class="qty-btn" onclick="updateQty('${item.n}', ${item.p}, 1)">+</button>
                     </div>
                 </div>`;
@@ -244,15 +262,10 @@
         if (!cart[name]) cart[name] = { price, qty: 0 };
         if (cart[name].qty + change >= 0) {
             cart[name].qty += change;
-            
-            // Update Menu quantity
-            const menuQtySpan = document.getElementById('qty-' + name.replace(/\s/g, ''));
+            let safeName = name.replace(/[^a-zA-Z0-9]/g, '');
+            const menuQtySpan = document.getElementById('qty-' + safeName);
             if (menuQtySpan) menuQtySpan.innerText = cart[name].qty;
-            
-            // If on cart page, refresh it
-            if (!document.getElementById('cart-page').classList.contains('hidden')) {
-                renderCart();
-            }
+            if (!document.getElementById('cart-page').classList.contains('hidden')) renderCart();
             updateTotals();
         }
     }
@@ -265,23 +278,14 @@
         document.getElementById('items-count-float').innerText = count;
         const isMenu = !document.getElementById('menu-page').classList.contains('hidden');
         document.getElementById('floating-bar').classList.toggle('hidden', count === 0 || !isMenu);
-        
-        // Hide/Show Checkout Button based on cart status
-        if(document.getElementById('checkout-btn')) {
-            document.getElementById('checkout-btn').classList.toggle('hidden', count === 0);
-        }
+        if(document.getElementById('checkout-btn')) document.getElementById('checkout-btn').classList.toggle('hidden', count === 0);
     }
 
     function renderCart() {
         let html = '';
-        let hasItems = false;
         for(let key in cart) if(cart[key].qty > 0) {
-            hasItems = true;
             html += `<div class="food-item">
-                <div class="item-details">
-                    <span class="item-name">${key}</span>
-                    <span class="item-price">₹${cart[key].price * cart[key].qty}</span>
-                </div>
+                <div class="item-details"><span class="item-name">${key}</span><span class="item-price">₹${cart[key].price * cart[key].qty}</span></div>
                 <div class="qty-controls">
                     <button class="qty-btn" onclick="updateQty('${key}', ${cart[key].price}, -1)">−</button>
                     <span style="font-weight:600">${cart[key].qty}</span>
@@ -289,7 +293,7 @@
                 </div>
             </div>`;
         }
-        document.getElementById('cart-items-details').innerHTML = html || '<p style="text-align:center; padding: 20px;">Your cart is currently empty.</p>';
+        document.getElementById('cart-items-details').innerHTML = html || '<p style="text-align:center; padding: 20px;">Your cart is empty.</p>';
     }
 
     function showPage(pageId) {
@@ -303,8 +307,20 @@
     function finalizeOrder() {
         const addr = document.getElementById('custAddr').value;
         const name = document.getElementById('custName').value;
-        if(!addr || !name) return alert("Please fill in your name and delivery address.");
         const amt = document.getElementById('final-total').innerText;
+        if(!addr || !name) return alert("Please fill in your details.");
+
+        let orderSummary = "";
+        for(let key in cart) if(cart[key].qty > 0) orderSummary += `${key} (x${cart[key].qty}), `;
+
+        // GOOGLE SHEETS INTEGRATION
+        const scriptURL = 'PASTE_YOUR_GOOGLE_SCRIPT_URL_HERE'; 
+        fetch(scriptURL, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify({name: name, address: addr, order: orderSummary, total: amt})
+        }).catch(e => console.log(e));
+
         document.getElementById('qr-code').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=YOUR_UPI_ID@okicici&pn=TiffinTreats&am=${amt}&cu=INR`;
         showPage('payment-page');
     }
